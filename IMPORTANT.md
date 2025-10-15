@@ -97,27 +97,20 @@ SwiftUI's NavigationStack applies backgrounds on a per-screen basis. Each destin
 
 This requirement was identified through production testing, where all navigable views implement this modifier as a core pattern requirement.
 
-## Alternative: View Extension
+## Convenience Extension
 
-A convenience extension can simplify implementation:
+The library includes a convenience extension to simplify implementation:
 
 ```swift
-extension View {
-    func clearNavigationBackground() -> some View {
-        self.containerBackground(for: .navigation) {
-            Color.clear
-        }
-    }
-}
-
-// Usage
 struct DetailView: View {
     var body: some View {
         VStack {
             Text("Detail")
         }
         .navigationTitle("Detail")
-        .clearNavigationBackground()
+        .clearNavigationBackground()  // Convenience method included in library
     }
 }
 ```
+
+This extension method applies `.containerBackground(for: .navigation) { Color.clear }` automatically.

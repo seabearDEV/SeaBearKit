@@ -98,9 +98,7 @@ struct MainMenuView: View {
             }
         }
         .navigationTitle("IOSLayouts Demo")
-        .containerBackground(for: .navigation) {
-            Color.clear
-        }
+        .clearNavigationBackground()
     }
 }
 
@@ -131,9 +129,7 @@ struct SimpleNavigationDemo: View {
             .buttonStyle(.borderedProminent)
         }
         .navigationTitle("Simple Navigation")
-        .containerBackground(for: .navigation) {
-            Color.clear
-        }
+        .clearNavigationBackground()
     }
 }
 
@@ -160,9 +156,7 @@ struct DeepNavigationDemo: View {
             .buttonStyle(.borderedProminent)
         }
         .navigationTitle("Deep Navigation")
-        .containerBackground(for: .navigation) {
-            Color.clear
-        }
+        .clearNavigationBackground()
     }
 }
 
@@ -189,9 +183,7 @@ struct DeepLevelView: View {
             }
         }
         .navigationTitle("Level \(level)")
-        .containerBackground(for: .navigation) {
-            Color.clear
-        }
+        .clearNavigationBackground()
     }
 }
 
@@ -221,9 +213,7 @@ struct ListDemo: View {
             }
         }
         .navigationTitle("List Example")
-        .containerBackground(for: .navigation) {
-            Color.clear
-        }
+        .clearNavigationBackground()
     }
 }
 
@@ -258,9 +248,7 @@ struct FormDemo: View {
             }
         }
         .navigationTitle("Form Example")
-        .containerBackground(for: .navigation) {
-            Color.clear
-        }
+        .clearNavigationBackground()
     }
 }
 
@@ -309,9 +297,7 @@ struct DetailScreen: View {
             .padding()
         }
         .navigationTitle(title)
-        .containerBackground(for: .navigation) {
-            Color.clear
-        }
+        .clearNavigationBackground()
     }
 }
 
