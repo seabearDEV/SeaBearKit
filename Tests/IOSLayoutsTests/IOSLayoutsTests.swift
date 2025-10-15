@@ -48,12 +48,17 @@ final class IOSLayoutsTests: XCTestCase {
     }
 
     func testSamplePalettes() {
-        XCTAssertEqual(ColorPalette.samplePalettes.count, 4)
+        XCTAssertEqual(ColorPalette.samplePalettes.count, 9)
 
         let names = ColorPalette.samplePalettes.map { $0.name }
         XCTAssertTrue(names.contains("Sunset"))
         XCTAssertTrue(names.contains("Ocean"))
         XCTAssertTrue(names.contains("Forest"))
         XCTAssertTrue(names.contains("Monochrome"))
+        XCTAssertTrue(names.contains("Midnight"))
+        XCTAssertTrue(names.contains("Cherry Blossom"))
+        XCTAssertTrue(names.contains("Autumn"))
+        XCTAssertTrue(names.contains("Lavender"))
+        XCTAssertTrue(names.contains("Mint"))
     }
 }

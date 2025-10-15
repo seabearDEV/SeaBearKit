@@ -68,13 +68,18 @@ PersistentBackgroundNavigation.minimal(palette: .forest) {
 
 ### Color Palettes
 
-IOSLayouts includes several built-in palettes:
+IOSLayouts includes nine built-in palettes:
 
 ```swift
-ColorPalette.sunset      // Warm tones: coral, orange, yellow, pink, purple
-ColorPalette.ocean       // Cool blues and teals
-ColorPalette.forest      // Natural greens and earth tones
-ColorPalette.monochrome  // Grayscale
+ColorPalette.sunset         // Warm tones: coral, orange, yellow, pink, purple
+ColorPalette.ocean          // Cool blues and teals
+ColorPalette.forest         // Natural greens and earth tones
+ColorPalette.monochrome     // Grayscale
+ColorPalette.midnight       // Dark blues and purples (for dark themes)
+ColorPalette.cherryBlossom  // Soft pinks and roses
+ColorPalette.autumn         // Warm oranges, reds, and browns
+ColorPalette.lavender       // Calming purple and blue tones
+ColorPalette.mint           // Fresh greens and blues
 ```
 
 **Creating custom palettes:**

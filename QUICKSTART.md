@@ -35,10 +35,15 @@ This provides a persistent gradient background across navigation transitions.
 ## Choose a Palette
 
 ```swift
-.sunset      // Warm tones (default)
-.ocean       // Cool blues
-.forest      // Natural greens
-.monochrome  // Grayscale
+.sunset         // Warm tones (default)
+.ocean          // Cool blues
+.forest         // Natural greens
+.monochrome     // Grayscale
+.midnight       // Dark blues and purples
+.cherryBlossom  // Soft pinks
+.autumn         // Warm oranges and reds
+.lavender       // Calming purples
+.mint           // Fresh greens
 ```
 
 ## Background Modes

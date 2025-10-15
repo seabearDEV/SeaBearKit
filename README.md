@@ -12,7 +12,7 @@ This pattern was developed through extensive iteration to address SwiftUI's navi
 
 - **Persistent Background System**: NavigationStack wrapper that maintains backgrounds during transitions
 - **Gradient Backgrounds**: Configurable gradients with vignette effects (iOS 18+ Liquid Glass compatible)
-- **Color Palettes**: Extensible palette system with built-in themes (Sunset, Ocean, Forest, Monochrome)
+- **Color Palettes**: Extensible palette system with nine built-in themes
 - **Performance Optimized**: Static gradients with minimal battery impact
 - **Appearance Adaptive**: Automatic light/dark mode support
 - **Material Integration**: Compatible with iOS 18+ material system
@@ -67,14 +67,19 @@ Or in Xcode: File → Add Package Dependencies → Enter repository URL
 
 ## Color Palettes
 
-The library includes several built-in palettes and supports custom palette creation:
+The library includes nine built-in palettes and supports custom palette creation:
 
 ```swift
 // Built-in palettes
-.sunset      // Warm tones: coral, orange, yellow
-.ocean       // Cool blues and teals
-.forest      // Natural greens and earth tones
-.monochrome  // Grayscale
+.sunset         // Warm tones: coral, orange, yellow
+.ocean          // Cool blues and teals
+.forest         // Natural greens and earth tones
+.monochrome     // Grayscale
+.midnight       // Dark blues and purples (for dark themes)
+.cherryBlossom  // Soft pinks and roses
+.autumn         // Warm oranges, reds, and browns
+.lavender       // Calming purple and blue tones
+.mint           // Fresh greens and blues
 
 // Custom palette
 ColorPalette(
