@@ -1,2 +1,2 @@
 # ios-layouts
-A collection of ready-to-use SwiftUI layouts and UI components to accelerate iOS app development. Drop-in code for common screens and patterns.
+A curated collection of production-ready SwiftUI layouts and reusable UI components designed to help iOS developers quickly prototype and build beautiful apps. Features modern, customizable layouts for common app screens including authentication, profiles, feeds, settings, and more. All components follow SwiftUI best practices and are fully documented with example usage."
