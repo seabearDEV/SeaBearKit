@@ -91,13 +91,14 @@ struct MainMenuView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("IOSLayouts Demo")
                         .font(.headline)
-                    Text("Showcasing the PersistentBackgroundNavigation pattern with gradient backgrounds. Navigate between screens to see how the background persists without flickering.")
+                    Text("Showcasing the PersistentBackgroundNavigation pattern with gradient backgrounds. Navigate between screens to observe the persistent background during transitions.")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
             }
         }
         .navigationTitle("IOSLayouts Demo")
+        .navigationBarTitleDisplayMode(.large)
         .clearNavigationBackground()
     }
 }
@@ -115,20 +116,22 @@ struct SimpleNavigationDemo: View {
                 .font(.title)
                 .fontWeight(.bold)
 
-            Text("Notice how the background remains consistent and doesn't flicker during the navigation transition.")
+            Text("The background persists during navigation transitions, maintaining visual consistency throughout the hierarchy.")
                 .multilineTextAlignment(.center)
                 .padding()
 
             NavigationLink("Next Screen") {
                 DetailScreen(
-                    title: "Level 2",
+                    title: "Detail",
                     icon: "star.fill",
-                    color: .yellow
+                    color: .yellow,
+                    depth: 2
                 )
             }
             .buttonStyle(.borderedProminent)
         }
         .navigationTitle("Simple Navigation")
+        .navigationBarTitleDisplayMode(.inline)
         .clearNavigationBackground()
     }
 }
@@ -150,12 +153,13 @@ struct DeepNavigationDemo: View {
                 .multilineTextAlignment(.center)
                 .padding()
 
-            NavigationLink("Go Deeper (Level 1)") {
+            NavigationLink("Start Journey") {
                 DeepLevelView(level: 1)
             }
             .buttonStyle(.borderedProminent)
         }
         .navigationTitle("Deep Navigation")
+        .navigationBarTitleDisplayMode(.inline)
         .clearNavigationBackground()
     }
 }
@@ -165,12 +169,27 @@ struct DeepLevelView: View {
 
     var body: some View {
         VStack(spacing: 24) {
+            // Show depth indicator as badge
+            HStack(spacing: 8) {
+                ForEach(1...level, id: \.self) { _ in
+                    Circle()
+                        .fill(.blue)
+                        .frame(width: 8, height: 8)
+                }
+            }
+            .padding(.bottom, 8)
+
             Text("Level \(level)")
                 .font(.largeTitle)
                 .fontWeight(.bold)
 
+            Text("Depth: \(level) deep")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .padding(.bottom)
+
             if level < 5 {
-                NavigationLink("Go Deeper (Level \(level + 1))") {
+                NavigationLink("Continue to Level \(level + 1)") {
                     DeepLevelView(level: level + 1)
                 }
                 .buttonStyle(.borderedProminent)
@@ -178,11 +197,16 @@ struct DeepLevelView: View {
                 Image(systemName: "flag.checkered")
                     .font(.system(size: 60))
                     .foregroundStyle(.green)
-                Text("You've reached the end!")
+                Text("Maximum Depth Reached")
                     .font(.title2)
+                    .fontWeight(.semibold)
+                Text("Background remains consistent at all levels")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
             }
         }
         .navigationTitle("Level \(level)")
+        .navigationBarTitleDisplayMode(.inline)
         .clearNavigationBackground()
     }
 }
@@ -205,7 +229,8 @@ struct ListDemo: View {
                     DetailScreen(
                         title: items[index].0,
                         icon: items[index].1,
-                        color: items[index].2
+                        color: items[index].2,
+                        depth: 2
                     )
                 } label: {
                     Label(items[index].0, systemImage: items[index].1)
@@ -213,6 +238,7 @@ struct ListDemo: View {
             }
         }
         .navigationTitle("List Example")
+        .navigationBarTitleDisplayMode(.inline)
         .clearNavigationBackground()
     }
 }
@@ -242,12 +268,14 @@ struct FormDemo: View {
                     DetailScreen(
                         title: "Advanced",
                         icon: "gearshape.fill",
-                        color: .gray
+                        color: .gray,
+                        depth: 2
                     )
                 }
             }
         }
         .navigationTitle("Form Example")
+        .navigationBarTitleDisplayMode(.inline)
         .clearNavigationBackground()
     }
 }
@@ -258,9 +286,20 @@ struct DetailScreen: View {
     let title: String
     let icon: String
     let color: Color
+    let depth: Int
 
     var body: some View {
         VStack(spacing: 24) {
+            // Depth indicator
+            HStack(spacing: 8) {
+                ForEach(1...depth, id: \.self) { _ in
+                    Circle()
+                        .fill(color.opacity(0.6))
+                        .frame(width: 8, height: 8)
+                }
+            }
+            .padding(.bottom, 4)
+
             Image(systemName: icon)
                 .font(.system(size: 80))
                 .foregroundStyle(color)
@@ -268,6 +307,10 @@ struct DetailScreen: View {
             Text(title)
                 .font(.largeTitle)
                 .fontWeight(.bold)
+
+            Text("Navigation depth: \(depth)")
+                .font(.caption)
+                .foregroundStyle(.secondary)
 
             Text("The persistent background pattern ensures smooth visual transitions throughout your navigation hierarchy.")
                 .multilineTextAlignment(.center)
@@ -279,7 +322,7 @@ struct DetailScreen: View {
             VStack(alignment: .leading, spacing: 12) {
                 FeatureRow(
                     icon: "checkmark.circle.fill",
-                    text: "No background flickering"
+                    text: "Consistent background rendering"
                 )
                 FeatureRow(
                     icon: "checkmark.circle.fill",
@@ -291,12 +334,13 @@ struct DetailScreen: View {
                 )
                 FeatureRow(
                     icon: "checkmark.circle.fill",
-                    text: "Elegant gradient backgrounds"
+                    text: "Gradient persists at depth \(depth)"
                 )
             }
             .padding()
         }
         .navigationTitle(title)
+        .navigationBarTitleDisplayMode(.inline)
         .clearNavigationBackground()
     }
 }

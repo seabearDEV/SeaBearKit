@@ -4,9 +4,9 @@ A collection of production-ready SwiftUI layout patterns and UI components for i
 
 ## Core Feature: Persistent Background Navigation
 
-The **PersistentBackgroundNavigation** component maintains consistent backgrounds across NavigationStack transitions without flickering or visual artifacts.
+The **PersistentBackgroundNavigation** component maintains consistent backgrounds across NavigationStack transitions.
 
-This pattern was developed through extensive iteration to address SwiftUI's navigation background flicker issues.
+This pattern was developed through extensive iteration to address SwiftUI's navigation background consistency issues.
 
 ## Features
 
@@ -112,7 +112,7 @@ PersistentBackgroundNavigation.minimal(palette: .forest)
 
 ## Problem Statement
 
-Standard SwiftUI NavigationStack implementations create their own backgrounds that can flicker or change inconsistently during transitions. This library addresses the issue through a layered approach:
+Standard SwiftUI NavigationStack implementations create their own backgrounds that can change inconsistently during transitions. This library addresses the issue through a layered approach:
 
 ```swift
 ZStack {
@@ -127,15 +127,15 @@ ZStack {
 }
 ```
 
-This approach eliminates background flicker while maintaining smooth navigation transitions.
+This approach ensures consistent background rendering throughout navigation transitions.
 
 ## Project Origins
 
-This pattern was developed through iterative refinement to resolve background flickering issues in SwiftUI navigation. Key development milestones:
+This pattern was developed through iterative refinement to resolve background consistency issues in SwiftUI navigation. Key development milestones:
 
-- Resolved background flicker during color palette transitions
+- Resolved background consistency during color palette transitions
 - Centralized background rendering and improved gradient visibility
-- Removed LinearGradient tint overlays to eliminate navigation artifacts
+- Removed LinearGradient tint overlays to improve navigation rendering
 - Standardized navigation transitions and view backgrounds
 
 ## Demo

@@ -3,10 +3,10 @@
 //  IOSLayouts
 //
 //  NavigationStack wrapper that maintains a persistent background across all navigation transitions.
-//  This pattern was developed through iterative refinement to eliminate background flicker.
+//  This pattern was developed through iterative refinement to ensure background consistency.
 //
-//  CRITICAL: Uses .containerBackground(for: .navigation) { Color.clear } to prevent
-//  navigation transition artifacts and background flickering.
+//  CRITICAL: Uses .containerBackground(for: .navigation) { Color.clear } to ensure
+//  consistent navigation transition rendering and background persistence.
 //
 
 import SwiftUI
@@ -16,7 +16,7 @@ import SwiftUI
 /// A NavigationStack wrapper that maintains a persistent background during navigation transitions.
 ///
 /// This component solves a common SwiftUI challenge: maintaining a consistent background
-/// across navigation transitions without flickering or visual artifacts.
+/// across navigation transitions.
 ///
 /// ## Usage
 ///
@@ -41,7 +41,7 @@ import SwiftUI
 /// otherwise the background will disappear when navigating to that view.
 ///
 /// Without this pattern, NavigationStack creates its own background that changes during
-/// transitions, causing flickering and visual inconsistencies.
+/// transitions, causing visual inconsistencies.
 ///
 public struct PersistentBackgroundNavigation<Content: View>: View {
     let palette: ColorPalette
@@ -71,7 +71,7 @@ public struct PersistentBackgroundNavigation<Content: View>: View {
             // Layer 2: NavigationStack with transparent container
             NavigationStack {
                 content
-                    // CRITICAL: This is the key to preventing flicker
+                    // CRITICAL: This ensures consistent rendering
                     // Makes the navigation container background transparent
                     // so the persistent background remains visible
                     .containerBackground(for: .navigation) {
@@ -114,15 +114,15 @@ extension PersistentBackgroundNavigation {
 
             VStack(spacing: 16) {
                 GlassNavigationButton(icon: "1.circle.fill", title: "Screen 1") {
-                    DetailView(title: "Screen 1", color: .red)
+                    DetailView(screenNumber: 1, color: .red, depth: 1)
                 }
 
                 GlassNavigationButton(icon: "2.circle.fill", title: "Screen 2") {
-                    DetailView(title: "Screen 2", color: .blue)
+                    DetailView(screenNumber: 2, color: .blue, depth: 1)
                 }
 
                 GlassNavigationButton(icon: "3.circle.fill", title: "Screen 3") {
-                    DetailView(title: "Screen 3", color: .green)
+                    DetailView(screenNumber: 3, color: .green, depth: 1)
                 }
             }
             .padding()
@@ -161,11 +161,44 @@ extension PersistentBackgroundNavigation {
 // MARK: - Preview Helper
 
 private struct DetailView: View {
-    let title: String
+    let screenNumber: Int
     let color: Color
+    let depth: Int
+
+    // For backward compatibility with minimal preview
+    init(title: String, color: Color, depth: Int = 1) {
+        // Extract screen number from title like "Screen 1" or default to 1
+        if let number = Int(title.replacingOccurrences(of: "Screen ", with: "")) {
+            self.screenNumber = number
+        } else {
+            self.screenNumber = 1
+        }
+        self.color = color
+        self.depth = depth
+    }
+
+    init(screenNumber: Int, color: Color, depth: Int = 1) {
+        self.screenNumber = screenNumber
+        self.color = color
+        self.depth = depth
+    }
+
+    var title: String {
+        "Screen \(screenNumber) Level \(depth)"
+    }
 
     var body: some View {
         VStack(spacing: 24) {
+            // Depth indicator
+            HStack(spacing: 8) {
+                ForEach(1...depth, id: \.self) { _ in
+                    Circle()
+                        .fill(color.opacity(0.6))
+                        .frame(width: 8, height: 8)
+                }
+            }
+            .padding(.bottom, 4)
+
             RoundedRectangle(cornerRadius: 24)
                 .fill(color.opacity(0.3))
                 .frame(width: 200, height: 200)
@@ -180,26 +213,38 @@ private struct DetailView: View {
                     }
                 )
 
-            Text("The gradient background persists during navigation transitions without flickering.")
+            Text("Depth: \(depth)")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+
+            Text("The gradient background persists during navigation transitions.")
                 .multilineTextAlignment(.center)
                 .padding(.horizontal)
 
-            GlassButton(
-                label: "Go Deeper",
-                icon: "arrow.right",
-                iconPosition: .trailing
-            ) {
-                DetailView(
-                    title: "\(title) > Detail",
-                    color: color.opacity(0.7)
-                )
+            if depth < 4 {
+                GlassButton(
+                    label: "Go to Level \(depth + 1)",
+                    icon: "arrow.right",
+                    iconPosition: .trailing
+                ) {
+                    DetailView(
+                        screenNumber: screenNumber,
+                        color: color.opacity(0.8),
+                        depth: depth + 1
+                    )
+                }
+                .frame(maxWidth: 200)
+            } else {
+                Text("Maximum depth reached")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
             }
-            .frame(maxWidth: 200)
 
             Spacer()
         }
         .padding(.top, 40)
         .navigationTitle(title)
+        .navigationBarTitleDisplayMode(.inline)
         .containerBackground(for: .navigation) {
             Color.clear
         }

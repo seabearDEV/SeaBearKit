@@ -4,11 +4,11 @@ Technical documentation for the IOSLayouts library architecture and design decis
 
 ## Overview
 
-IOSLayouts is a Swift Package that provides production-ready SwiftUI layout patterns. The core focus is the **Persistent Background Navigation** pattern, which solves a common SwiftUI challenge: maintaining a consistent background across navigation transitions without flickering or visual artifacts.
+IOSLayouts is a Swift Package that provides production-ready SwiftUI layout patterns. The core focus is the **Persistent Background Navigation** pattern, which solves a common SwiftUI challenge: maintaining a consistent background across navigation transitions.
 
 ## The Problem
 
-In standard SwiftUI, when you use `NavigationStack`, each navigation transition can cause the background to flicker or change inconsistently. This happens because:
+In standard SwiftUI, when you use `NavigationStack`, each navigation transition can cause the background to change inconsistently. This happens because:
 
 1. NavigationStack creates its own background layer
 2. During transitions, the background is recreated or modified
@@ -18,8 +18,8 @@ In standard SwiftUI, when you use `NavigationStack`, each navigation transition 
 
 Before arriving at the current solution, several approaches were attempted:
 
-1. **LinearGradient overlays**: Caused navigation artifacts
-2. **Direct background modifiers**: Led to flickering during palette changes
+1. **LinearGradient overlays**: Caused navigation rendering issues
+2. **Direct background modifiers**: Led to inconsistency during palette changes
 3. **Multiple gradient layers**: Poor performance and visibility issues
 
 ## The Solution
@@ -93,7 +93,7 @@ public struct ColorPalette {
 - **Purpose**: NavigationStack wrapper with persistent background
 - **Critical modifier**: `.containerBackground(for: .navigation) { Color.clear }`
 - **Structure**: ZStack with background behind NavigationStack
-- **Result**: No flicker, smooth transitions
+- **Result**: Consistent rendering, smooth transitions
 
 ## Design Decisions
 
@@ -213,7 +213,7 @@ This library requires iOS 18.0+ because:
 
 1. `.containerBackground(for: .navigation)` API introduced in iOS 18.0
 2. iOS 17 has `.containerBackground(for:)` but not the `.navigation` container type
-3. This specific API is critical to the flicker-free navigation pattern
+3. This specific API is critical to consistent navigation rendering
 4. No alternative approach found that maintains the same visual quality
 
 For iOS 17 or earlier, developers must use traditional solid backgrounds or alternative patterns.
@@ -221,9 +221,9 @@ For iOS 17 or earlier, developers must use traditional solid backgrounds or alte
 ## Development History
 
 This pattern was developed through iterative refinement. Key milestones:
-- Resolved background flicker during color palette transitions
+- Resolved background consistency during color palette transitions
 - Centralized background rendering and improved gradient visibility
-- Removed LinearGradient tint overlays to eliminate navigation artifacts
+- Removed LinearGradient tint overlays to improve navigation rendering
 - Standardized navigation transitions and view backgrounds
 
 ## Contributing

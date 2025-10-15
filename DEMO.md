@@ -98,7 +98,7 @@ PlaygroundPage.current.setLiveView(ContentView())
 
 Key behaviors to observe:
 
-1. **Flicker Elimination**: Background gradient maintains consistency during screen transitions
+1. **Consistent Rendering**: Background gradient maintains consistency during screen transitions
 2. **Transition Quality**: Navigation animations execute without visual artifacts
 3. **Palette Transitions**: Color palette changes animate smoothly
 4. **Configuration Modes**: Standard (gradient) and Minimal (system background) options available
@@ -109,7 +109,7 @@ Key behaviors to observe:
 Standard NavigationStack background approach:
 
 ```swift
-// Standard approach (flickers during navigation)
+// Standard approach (inconsistent during navigation)
 ZStack {
     LinearGradient(...)
     NavigationStack {
@@ -121,10 +121,10 @@ ZStack {
 IOSLayouts approach:
 
 ```swift
-// Flicker-free implementation
+// Consistent rendering implementation
 PersistentBackgroundNavigation(palette: .sunset) {
     ContentView()
 }
 ```
 
-The architectural difference eliminates flicker during navigation transitions.
+The architectural difference ensures consistent rendering during navigation transitions.

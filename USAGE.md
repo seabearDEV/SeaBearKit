@@ -1,6 +1,6 @@
 # IOSLayouts Usage Guide
 
-Production-ready SwiftUI layout patterns for iOS development. This guide documents the **PersistentBackgroundNavigation** system, which maintains consistent backgrounds across navigation transitions without flickering.
+Production-ready SwiftUI layout patterns for iOS development. This guide documents the **PersistentBackgroundNavigation** system, which maintains consistent backgrounds across navigation transitions.
 
 ## Installation
 
@@ -152,7 +152,7 @@ SomeView()
 
 ### Implementation Pattern
 
-The flicker-free approach uses a layered structure:
+The consistent rendering approach uses a layered structure:
 
 ```swift
 ZStack {
@@ -169,7 +169,7 @@ ZStack {
 }
 ```
 
-The `.containerBackground(for: .navigation) { Color.clear }` modifier renders the NavigationStack transparent, exposing the persistent background layer while eliminating flicker during transitions.
+The `.containerBackground(for: .navigation) { Color.clear }` modifier renders the NavigationStack transparent, exposing the persistent background layer and ensuring consistent rendering during transitions.
 
 ## Best Practices
 
@@ -239,7 +239,7 @@ The persistent background maintains consistency across all navigation hierarchy 
 
 ## Troubleshooting
 
-### Background Flicker During Navigation
+### Background Inconsistency During Navigation
 
 Ensure `PersistentBackgroundNavigation` is used rather than manual `NavigationStack` creation. The wrapper applies the required `.containerBackground(for: .navigation)` modifier.
 
@@ -257,9 +257,9 @@ PersistentBackgroundNavigation(palette: .ocean) {
 
 ## Development History
 
-This pattern was developed through iterative refinement to resolve NavigationStack background flickering issues.
+This pattern was developed through iterative refinement to resolve NavigationStack background consistency issues.
 
 Key development milestones:
-- Resolved background flicker during color palette transitions
+- Resolved background consistency during color palette transitions
 - Centralized background rendering and improved gradient visibility
-- Removed LinearGradient tint overlays to eliminate navigation artifacts
+- Removed LinearGradient tint overlays to improve navigation rendering

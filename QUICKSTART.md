@@ -103,7 +103,7 @@ var body: some Scene {
 
 ## Technical Overview
 
-Standard SwiftUI NavigationStack implementations can cause background flickering during transitions. This library addresses the issue through layered architecture:
+Standard SwiftUI NavigationStack implementations can cause background inconsistencies during transitions. This library addresses the issue through layered architecture:
 
 ```swift
 ZStack {
@@ -112,7 +112,7 @@ ZStack {
     NavigationStack {
         Content()
             .containerBackground(for: .navigation) {
-                Color.clear  // Transparent container = no flicker
+                Color.clear  // Transparent container = consistent rendering
             }
     }
 }
