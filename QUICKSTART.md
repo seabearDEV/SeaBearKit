@@ -38,7 +38,7 @@ SeaBearKit offers two ways to handle navigation - choose what fits your style:
 
 ### Automatic (Recommended)
 
-Use `PersistentNavigationLink` for zero-friction navigation:
+Use `PersistentNavigationLink` for automatic navigation:
 
 ```swift
 import SeaBearKit
@@ -169,7 +169,7 @@ var body: some Scene {
 - Swift 6.0+
 - Xcode 15.0+
 
-**Platform Note**: iOS 18+ provides the best experience. iOS 17 uses a fallback approach that works well for most use cases.
+**Platform Note**: iOS 18+ provides the optimal experience. iOS 17 uses a fallback approach that works well for most use cases.
 
 ## Next Steps
 
@@ -194,7 +194,7 @@ ZStack {
 }
 ```
 
-This pattern was refined through production use.
+This pattern was developed through iterative refinement.
 
 ## Support
 

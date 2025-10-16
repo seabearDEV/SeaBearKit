@@ -30,7 +30,7 @@ extension View {
     ///
     /// ## Platform Support
     ///
-    /// - **iOS 18+**: Uses `.containerBackground(for: .navigation)` for perfect transparency
+    /// - **iOS 18+**: Uses `.containerBackground(for: .navigation)` for complete transparency
     /// - **iOS 17**: Uses fallback approach with toolbar background hiding
     ///
     /// ## Technical Details
@@ -40,7 +40,7 @@ extension View {
     /// background layer to remain visible.
     ///
     /// On iOS 17, uses `.toolbarBackground(.hidden)` and `.scrollContentBackground(.hidden)`
-    /// as a best-effort fallback. This works well in most cases but may have minor
+    /// as a fallback approach. This works well in most cases but may have minor
     /// visual differences in edge cases.
     ///
     /// - Returns: A view with transparent navigation container background.
@@ -53,7 +53,7 @@ extension View {
     public func clearNavigationBackground() -> some View {
         Group {
             if #available(iOS 18.0, *) {
-                // iOS 18: Perfect solution using containerBackground
+                // iOS 18: Optimal solution using containerBackground
                 self.containerBackground(for: .navigation) {
                     Color.clear
                 }

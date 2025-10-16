@@ -58,7 +58,7 @@ public struct PersistentBackgroundNavigation<Background: View, Content: View>: V
             // Layer 2: NavigationStack with transparent container
             NavigationStack {
                 if #available(iOS 18.0, *) {
-                    // iOS 18: Use containerBackground for perfect transparency
+                    // iOS 18: Use containerBackground for complete transparency
                     content
                         .containerBackground(for: .navigation) {
                             Color.clear

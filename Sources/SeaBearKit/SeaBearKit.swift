@@ -3,14 +3,14 @@
 //  SeaBearKit
 //
 //  Main module file for SeaBearKit library.
-//  A collection of production-ready SwiftUI layouts and reusable UI components.
+//  A collection of SwiftUI layouts and reusable UI components.
 //
 
 import SwiftUI
 
-/// SeaBearKit - Production-ready SwiftUI layouts and components
+/// SeaBearKit - SwiftUI layouts and components
 ///
-/// This library provides battle-tested layout patterns extracted from real-world iOS applications.
+/// This library provides layout patterns for iOS applications.
 ///
 /// ## Core Components
 ///
@@ -20,7 +20,7 @@ import SwiftUI
 /// - `GradientBackground` - Static gradient background with vignette effect
 ///
 /// ### Automatic Navigation (Recommended)
-/// - `PersistentNavigationLink` - Zero-friction NavigationLink that auto-applies background transparency
+/// - `PersistentNavigationLink` - Automatic NavigationLink that auto-applies background transparency
 /// - `.persistentNavigationDestination(for:)` - Auto-wrapping value-based navigation
 /// - `.persistentNavigationDestination(item:)` - Auto-wrapping optional binding navigation
 /// - `.persistentNavigationDestination(isPresented:)` - Auto-wrapping boolean navigation
@@ -73,6 +73,6 @@ public struct SeaBearKit {
     /// Minimum iOS version supported
     public static let minimumIOSVersion = "17.0"
 
-    /// Recommended iOS version for best experience
+    /// Recommended iOS version for optimal experience
     public static let recommendedIOSVersion = "18.0"
 }

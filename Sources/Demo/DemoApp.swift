@@ -93,7 +93,7 @@ struct MainMenuView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("IOSLayouts Demo")
                         .font(.headline)
-                    Text("Showcasing two navigation approaches: Automatic (PersistentNavigationLink) for zero friction, and Manual (.clearNavigationBackground()) for advanced control. Both maintain perfect background persistence.")
+                    Text("Showcasing two navigation approaches: Automatic (PersistentNavigationLink) for simplified usage, and Manual (.clearNavigationBackground()) for advanced control. Both maintain consistent background persistence.")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
@@ -118,7 +118,7 @@ struct SimpleNavigationDemo: View {
                 .font(.title)
                 .fontWeight(.bold)
 
-            Text("Uses PersistentNavigationLink for zero-friction background persistence. No manual modifiers needed!")
+            Text("Uses PersistentNavigationLink for automatic background persistence. No manual modifiers needed!")
                 .multilineTextAlignment(.center)
                 .padding()
 

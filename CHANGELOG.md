@@ -22,7 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Technical
 - No breaking changes - existing code works without modification
-- Custom backgrounds leverage the same ZStack architecture for perfect persistence
+- Custom backgrounds leverage the same ZStack architecture for consistent persistence
 - Type inference ensures minimal API verbosity
 
 ## [1.1.0] - 2025-10-15
@@ -32,7 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Uses graceful degradation with fallback approach on iOS 17
   - iOS 18+ continues to use optimal `.containerBackground(for: .navigation)` API
   - iOS 17 uses `.toolbarBackground(.hidden)` fallback approach
-- **Automatic Navigation Components**: Zero-friction navigation wrappers
+- **Automatic Navigation Components**: Simplified navigation wrappers
   - `PersistentNavigationLink` - Drop-in NavigationLink replacement with automatic background clearing
   - `.persistentNavigationDestination(for:)` - Auto-wrapping for value-based navigation
   - `.persistentNavigationDestination(item:)` - Auto-wrapping for optional binding navigation
@@ -75,7 +75,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Platform Support
 
 ### Version 1.1.0+
-- **iOS 17.0+** (iOS 18+ recommended for best experience)
+- **iOS 17.0+** (iOS 18+ recommended for optimal experience)
 - **macOS 14.0+**
 
 ### Version 1.0.0
@@ -98,7 +98,7 @@ If your deployment target is iOS 18+, no code changes are required. The API rema
 
 **Optional: Use New Automatic Navigation**
 
-For zero-friction development, consider switching to automatic navigation:
+For simplified development, consider switching to automatic navigation:
 
 ```swift
 // Before (still works)

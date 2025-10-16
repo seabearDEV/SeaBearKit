@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![SPM Compatible](https://img.shields.io/badge/SPM-Compatible-brightgreen.svg)](https://swift.org/package-manager)
 
-A collection of production-ready SwiftUI layout patterns and UI components for iOS development.
+A collection of SwiftUI layout patterns and UI components for iOS development.
 
 ## Core Feature: Persistent Background Navigation
 
@@ -15,7 +15,7 @@ This pattern was developed through extensive iteration to address SwiftUI's navi
 
 ## Features
 
-- **Zero-Friction Navigation**: Automatic background persistence without manual modifiers
+- **Automatic Navigation**: Background persistence without manual modifiers
 - **Persistent Background System**: NavigationStack wrapper that maintains backgrounds during transitions
 - **Flexible API**: Choose automatic convenience wrappers or manual control
 - **Gradient Backgrounds**: Configurable gradients with vignette effects (iOS 18+ Liquid Glass compatible)
@@ -48,7 +48,7 @@ struct MyApp: App {
 
 ### 2. Use navigation in your views
 
-**Automatic (Recommended)** - Zero friction, just works:
+**Automatic (Recommended)** - No manual configuration required:
 ```swift
 PersistentNavigationLink("View Details") {
     DetailView()  // Background persists automatically!
@@ -63,11 +63,11 @@ NavigationLink("View Details") {
 }
 ```
 
-Both approaches work perfectly - choose what fits your style!
+Both approaches work - choose what fits your style.
 
 ## Requirements
 
-- iOS 17.0+ (iOS 18+ recommended for best experience)
+- iOS 17.0+ (iOS 18+ recommended for optimal experience)
 - Swift 6.0+
 - Xcode 15.0+
 
@@ -93,7 +93,7 @@ SeaBearKit provides flexibility to match your coding style:
 
 ### Automatic (Recommended for most cases)
 
-Use `PersistentNavigationLink` for zero-friction navigation:
+Use `PersistentNavigationLink` for automatic navigation:
 
 ```swift
 PersistentNavigationLink("Details") {
@@ -142,7 +142,7 @@ NavigationLink("Settings") {
 - **Automatic**: Large apps, team projects, when you want it to "just work"
 - **Manual**: Edge cases, when you need additional modifiers, precise control
 
-Both approaches coexist perfectly - use what makes sense for each screen.
+Both approaches coexist - use what makes sense for each screen.
 
 ## Color Palettes
 
@@ -308,4 +308,4 @@ MIT License - see [LICENSE](LICENSE) file for details
 
 ## Acknowledgments
 
-This library was developed to address production challenges encountered in iOS development. All components have been tested in production environments.
+This library was developed to address common challenges encountered in iOS development.

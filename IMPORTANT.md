@@ -29,11 +29,11 @@ NavigationLink("Details") {
 
 ### iOS 18+ (Optimal Experience)
 
-Uses `.containerBackground(for: .navigation)` for perfect transparency.
+Uses `.containerBackground(for: .navigation)` for complete transparency.
 
 ### iOS 17 (Fallback)
 
-Uses toolbar background hiding as a best-effort approach:
+Uses toolbar background hiding as a fallback approach:
 - `.toolbarBackground(.hidden, for: .navigationBar)`
 - `.toolbarBackground(.hidden, for: .bottomBar)`
 - `.scrollContentBackground(.hidden)`
@@ -42,7 +42,7 @@ Uses toolbar background hiding as a best-effort approach:
 - Custom toolbar backgrounds may conflict
 - Some List/Form backgrounds may need explicit `.scrollContentBackground(.hidden)`
 - Complex NavigationStack transitions may show brief flickers in edge cases
-- Works perfectly in 90%+ of use cases
+- Works well in 90%+ of use cases
 
 ## Example - Automatic Approach (Recommended)
 
@@ -170,7 +170,7 @@ List {
 ## Why Two Approaches?
 
 **Automatic (`PersistentNavigationLink`):**
-- ✅ Zero friction - can't forget
+- ✅ Automatic - no manual configuration needed
 - ✅ Scales to 100+ screens
 - ✅ Junior-dev friendly
 

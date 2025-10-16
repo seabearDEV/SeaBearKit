@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "SeaBearKit",
     platforms: [
-        .iOS(.v17), // iOS 17+ with best experience on iOS 18+
+        .iOS(.v17), // iOS 17+ with optimal experience on iOS 18+
         .macOS(.v14)
     ],
     products: [
