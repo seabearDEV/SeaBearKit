@@ -128,6 +128,23 @@ PersistentBackgroundNavigation(palette: myPalette) {
 }
 ```
 
+## Custom Backgrounds
+
+Use any SwiftUI view as a background:
+
+```swift
+PersistentBackgroundNavigation {
+    Image("hero-background")
+        .resizable()
+        .aspectRatio(contentMode: .fill)
+        .ignoresSafeArea()
+} content: {
+    ContentView()
+}
+```
+
+Works with: images, videos, patterns, animated gradients, or any custom view.
+
 ## Dynamic Switching
 
 ```swift

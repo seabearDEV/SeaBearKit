@@ -12,7 +12,7 @@ import SwiftUI
 
 /// NavigationStack wrapper that maintains a persistent background across all navigation transitions.
 ///
-/// ## Usage
+/// ## Usage with Color Palette
 ///
 /// ```swift
 /// PersistentBackgroundNavigation(palette: .sunset) {
@@ -20,42 +20,40 @@ import SwiftUI
 /// }
 /// ```
 ///
-/// Add `.clearNavigationBackground()` to each destination view:
+/// ## Usage with Custom Background
 ///
 /// ```swift
-/// struct DetailView: View {
-///     var body: some View {
-///         Text("Detail View")
-///             .navigationTitle("Details")
-///             .clearNavigationBackground()
-///     }
+/// PersistentBackgroundNavigation {
+///     Image("hero-background")
+///         .resizable()
+///         .ignoresSafeArea()
+/// } content: {
+///     ContentView()
 /// }
 /// ```
 ///
-public struct PersistentBackgroundNavigation<Content: View>: View {
-    let palette: ColorPalette
-    let configuration: BackgroundConfiguration
+/// Add `.clearNavigationBackground()` to each destination view or use `PersistentNavigationLink`.
+///
+public struct PersistentBackgroundNavigation<Background: View, Content: View>: View {
+    let background: Background
     let content: Content
 
-    /// Creates a navigation view with a persistent gradient background.
+    /// Creates a navigation view with a custom background.
     /// - Parameters:
-    ///   - palette: The color palette for the background
-    ///   - configuration: Background configuration options (default: .standard)
+    ///   - background: Custom view to use as the persistent background
     ///   - content: The root view of your navigation hierarchy
     public init(
-        palette: ColorPalette,
-        configuration: BackgroundConfiguration = .standard,
+        @ViewBuilder background: () -> Background,
         @ViewBuilder content: () -> Content
     ) {
-        self.palette = palette
-        self.configuration = configuration
+        self.background = background()
         self.content = content()
     }
 
     public var body: some View {
         ZStack {
             // Layer 1: Persistent background (sits behind everything)
-            PersistentBackground(palette: palette, configuration: configuration)
+            background
 
             // Layer 2: NavigationStack with transparent container
             NavigationStack {
@@ -75,10 +73,27 @@ public struct PersistentBackgroundNavigation<Content: View>: View {
     }
 }
 
-// MARK: - Convenience Initializers
+// MARK: - Convenience Initializers for Color Palettes
 
-extension PersistentBackgroundNavigation {
+extension PersistentBackgroundNavigation where Background == PersistentBackground {
+    /// Creates a navigation view with a persistent gradient background from a color palette.
+    /// - Parameters:
+    ///   - palette: The color palette for the background
+    ///   - configuration: Background configuration options (default: .standard)
+    ///   - content: The root view of your navigation hierarchy
+    public init(
+        palette: ColorPalette,
+        configuration: BackgroundConfiguration = .standard,
+        @ViewBuilder content: () -> Content
+    ) {
+        self.background = PersistentBackground(palette: palette, configuration: configuration)
+        self.content = content()
+    }
+
     /// Creates a navigation view with minimal background (system background only).
+    /// - Parameters:
+    ///   - palette: The color palette (used for adaptive color selection)
+    ///   - content: The root view of your navigation hierarchy
     public static func minimal(
         palette: ColorPalette,
         @ViewBuilder content: () -> Content
@@ -93,15 +108,15 @@ extension PersistentBackgroundNavigation {
 
 // MARK: - Preview
 
-#Preview("Navigation with Background") {
+#Preview("Gradient Background") {
     PersistentBackgroundNavigation(palette: .sunset) {
         VStack(spacing: 24) {
-            Text("Persistent Background Demo")
+            Text("Gradient Background")
                 .font(.title)
                 .fontWeight(.bold)
                 .padding(.top, 40)
 
-            Text("Notice the gradient background behind the navigation")
+            Text("Built-in color palette gradient")
                 .multilineTextAlignment(.center)
                 .padding(.horizontal)
 
@@ -122,25 +137,92 @@ extension PersistentBackgroundNavigation {
 
             Spacer()
         }
-        .navigationTitle("Demo")
+        .navigationTitle("Gradient Demo")
+    }
+}
+
+#Preview("Custom Background") {
+    PersistentBackgroundNavigation {
+        // Custom pattern background
+        ZStack {
+            Color.indigo
+
+            GeometryReader { geometry in
+                Path { path in
+                    let size = geometry.size
+                    let gridSize: CGFloat = 40
+
+                    // Vertical lines
+                    for x in stride(from: 0, through: size.width, by: gridSize) {
+                        path.move(to: CGPoint(x: x, y: 0))
+                        path.addLine(to: CGPoint(x: x, y: size.height))
+                    }
+
+                    // Horizontal lines
+                    for y in stride(from: 0, through: size.height, by: gridSize) {
+                        path.move(to: CGPoint(x: 0, y: y))
+                        path.addLine(to: CGPoint(x: size.width, y: y))
+                    }
+                }
+                .stroke(Color.white.opacity(0.1), lineWidth: 1)
+            }
+        }
+        .ignoresSafeArea()
+    } content: {
+        VStack(spacing: 24) {
+            Text("Custom Background")
+                .font(.title)
+                .fontWeight(.bold)
+                .padding(.top, 40)
+
+            Text("Any SwiftUI view as background")
+                .multilineTextAlignment(.center)
+                .padding(.horizontal)
+
+            VStack(spacing: 16) {
+                GlassNavigationButton(icon: "1.circle.fill", title: "Screen 1") {
+                    DetailView(screenNumber: 1, color: .red, depth: 1)
+                }
+
+                GlassNavigationButton(icon: "2.circle.fill", title: "Screen 2") {
+                    DetailView(screenNumber: 2, color: .blue, depth: 1)
+                }
+
+                GlassNavigationButton(icon: "3.circle.fill", title: "Screen 3") {
+                    DetailView(screenNumber: 3, color: .green, depth: 1)
+                }
+            }
+            .padding()
+
+            Spacer()
+        }
+        .navigationTitle("Custom Demo")
     }
 }
 
 #Preview("Minimal Background") {
     PersistentBackgroundNavigation.minimal(palette: .ocean) {
         VStack(spacing: 24) {
-            Text("Minimal Background Demo")
+            Text("Minimal Background")
                 .font(.title)
                 .fontWeight(.bold)
                 .padding(.top, 40)
 
-            Text("System background only (no gradient)")
+            Text("System background only")
                 .multilineTextAlignment(.center)
                 .padding(.horizontal)
 
             VStack(spacing: 16) {
                 GlassNavigationButton(icon: "1.circle.fill", title: "Screen 1") {
-                    DetailView(screenNumber: 1, color: .red)
+                    DetailView(screenNumber: 1, color: .red, depth: 1)
+                }
+
+                GlassNavigationButton(icon: "2.circle.fill", title: "Screen 2") {
+                    DetailView(screenNumber: 2, color: .blue, depth: 1)
+                }
+
+                GlassNavigationButton(icon: "3.circle.fill", title: "Screen 3") {
+                    DetailView(screenNumber: 3, color: .green, depth: 1)
                 }
             }
             .padding()

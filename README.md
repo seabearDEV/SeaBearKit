@@ -19,6 +19,7 @@ This pattern was developed through extensive iteration to address SwiftUI's navi
 - **Persistent Background System**: NavigationStack wrapper that maintains backgrounds during transitions
 - **Flexible API**: Choose automatic convenience wrappers or manual control
 - **Gradient Backgrounds**: Configurable gradients with vignette effects (iOS 18+ Liquid Glass compatible)
+- **Custom Backgrounds**: Use any SwiftUI view as a persistent background (images, videos, animations)
 - **Color Palettes**: Extensible palette system with nine built-in themes
 - **Performance Optimized**: Static gradients with minimal battery impact
 - **Appearance Adaptive**: Automatic light/dark mode support
@@ -179,6 +180,30 @@ PersistentBackgroundNavigation(palette: .sunset)
 // Minimal (system background only)
 PersistentBackgroundNavigation.minimal(palette: .forest)
 ```
+
+## Custom Backgrounds
+
+Use any SwiftUI view as a persistent background:
+
+```swift
+PersistentBackgroundNavigation {
+    // Your custom background
+    Image("hero-image")
+        .resizable()
+        .aspectRatio(contentMode: .fill)
+        .ignoresSafeArea()
+} content: {
+    ContentView()
+}
+```
+
+Examples of custom backgrounds:
+- **Images**: Hero images, patterns, textures
+- **Videos**: Background video playback
+- **Animated Gradients**: Time-based color transitions
+- **Custom Views**: Any SwiftUI composition
+
+The same persistent architecture applies - your custom background stays consistent across all navigation transitions.
 
 ## Documentation
 

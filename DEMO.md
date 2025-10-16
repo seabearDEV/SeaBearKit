@@ -15,11 +15,12 @@ Using Xcode's preview system:
 
 3. Open the Canvas (⌥⌘↩ or Editor → Canvas)
 
-4. You'll see two interactive previews:
-   - "Navigation with Background" - Shows the persistent background pattern with navigation
+4. You'll see three interactive previews:
+   - "Gradient Background" - Shows built-in color palette gradients
+   - "Custom Background" - Shows custom view backgrounds (grid pattern example)
    - "Minimal Background" - Shows minimal mode with system background only
 
-5. Click the "Live Preview" button to interact with the navigation
+5. Click the "Live Preview" button to interact with the navigation and test deep navigation
 
 ## Option 2: New iOS Application
 

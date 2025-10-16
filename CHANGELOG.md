@@ -5,6 +5,26 @@ All notable changes to SeaBearKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2025-10-15
+
+### Added
+- **Custom Background Support**: `PersistentBackgroundNavigation` now accepts any View as a background
+  - New initializer: `init(background: () -> Background, content: () -> Content)`
+  - Use images, videos, animated gradients, or any custom SwiftUI view
+  - Existing palette-based API remains unchanged and fully supported
+- **Enhanced Flexibility**: Background layer architecture now supports unlimited customization
+- **Preview Example**: Added "Custom Background" preview demonstrating custom gradient usage
+
+### Changed
+- Refactored `PersistentBackgroundNavigation` to be generic over `Background: View`
+- Palette-based initializers moved to constrained extension (`where Background == PersistentBackground`)
+- Updated documentation to showcase both palette and custom background approaches
+
+### Technical
+- No breaking changes - existing code works without modification
+- Custom backgrounds leverage the same ZStack architecture for perfect persistence
+- Type inference ensures minimal API verbosity
+
 ## [1.1.0] - 2025-10-15
 
 ### Added
@@ -93,5 +113,6 @@ PersistentNavigationLink("Details") {
 }
 ```
 
+[1.2.0]: https://github.com/seabearDEV/SeaBearKit/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/seabearDEV/SeaBearKit/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/seabearDEV/SeaBearKit/releases/tag/v1.0.0

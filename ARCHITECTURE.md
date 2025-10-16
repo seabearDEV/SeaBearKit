@@ -91,11 +91,36 @@ public struct ColorPalette {
 
 #### PersistentBackgroundNavigation
 - **Purpose**: NavigationStack wrapper with persistent background
-- **Critical modifier**: `.containerBackground(for: .navigation) { Color.clear }`
+- **Generic Design**: Accepts any `Background: View` for maximum flexibility
+- **Built-in Support**: Convenience initializers for `ColorPalette` gradients
+- **Custom Backgrounds**: Use images, videos, patterns, or any SwiftUI view
+- **Critical modifier**: `.containerBackground(for: .navigation) { Color.clear }` (iOS 18+)
+- **iOS 17 Fallback**: `.toolbarBackground(.hidden)` approach
 - **Structure**: ZStack with background behind NavigationStack
 - **Result**: Consistent rendering, smooth transitions
 
 ## Design Decisions
+
+### Why Generic Background Support?
+
+Version 1.2.0 introduced generic `Background: View` parameter:
+
+**Flexibility**:
+- Use any SwiftUI view as background
+- Images, videos, animated gradients, custom compositions
+- Same persistent architecture for all background types
+- No breaking changes - palette API preserved as convenience extension
+
+**Architecture**:
+```swift
+// Generic structure
+public struct PersistentBackgroundNavigation<Background: View, Content: View>
+
+// Palette convenience (constrained extension)
+extension PersistentBackgroundNavigation where Background == PersistentBackground {
+    public init(palette: ColorPalette, ...) { }
+}
+```
 
 ### Why Static Gradients?
 
@@ -189,14 +214,10 @@ Potential additions to consider:
 
 ## Platform Requirements
 
-- **iOS**: 18.0+
+- **iOS**: 17.0+ (iOS 18+ recommended for best experience)
+- **macOS**: 14.0+
 - **Swift**: 6.0+
-- **Xcode**: 16.0+
-
-iOS 18+ is required for:
-- `.containerBackground(for: .navigation)` API
-- Modern Observable framework support
-- Improved animation performance
+- **Xcode**: 15.0+
 
 ## Concurrency
 
@@ -207,16 +228,23 @@ The library uses Swift 6's strict concurrency model:
 - `ColorPalette` is `Sendable` for cross-actor passing
 - No data races possible
 
-## iOS 18+ Requirement
+## iOS Version Support
 
-This library requires iOS 18.0+ because:
+### iOS 18+ (Optimal)
 
-1. `.containerBackground(for: .navigation)` API introduced in iOS 18.0
-2. iOS 17 has `.containerBackground(for:)` but not the `.navigation` container type
-3. This specific API is critical to consistent navigation rendering
-4. No alternative approach found that maintains the same visual quality
+Uses `.containerBackground(for: .navigation) { Color.clear }` for perfect transparency:
+- Optimal rendering quality
+- Best navigation transitions
+- Full Liquid Glass design system integration
 
-For iOS 17 or earlier, developers must use traditional solid backgrounds or alternative patterns.
+### iOS 17 (Graceful Degradation)
+
+Uses fallback approach with `.toolbarBackground(.hidden)`:
+- `.toolbarBackground(.hidden, for: .navigationBar)`
+- `.toolbarBackground(.hidden, for: .bottomBar)`
+- `.scrollContentBackground(.hidden)`
+- Works well in 90%+ of use cases
+- Minor limitations with custom toolbar backgrounds
 
 ## Development History
 
@@ -230,10 +258,11 @@ This pattern was developed through iterative refinement. Key milestones:
 
 When contributing to this library:
 
-1. Maintain iOS 18+ requirement (for `.containerBackground(for: .navigation)`)
+1. Maintain iOS 17+ compatibility (iOS 18+ for optimal experience)
 2. Keep Swift 6 strict concurrency compliance
 3. Document performance impact of changes
 4. Test on both light and dark mode
-5. Verify on multiple device sizes
-6. Update architecture docs for structural changes
-7. Test Liquid Glass compliance (iOS 18+ design system)
+5. Test on both iOS 17 and iOS 18 when using version-specific APIs
+6. Verify on multiple device sizes
+7. Update architecture docs for structural changes
+8. Test Liquid Glass compliance on iOS 18+

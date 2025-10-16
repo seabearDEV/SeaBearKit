@@ -234,6 +234,56 @@ struct MenuView: View {
 
 ## Advanced Usage
 
+### Custom Backgrounds
+
+Use any SwiftUI view as a persistent background:
+
+```swift
+PersistentBackgroundNavigation {
+    Image("hero-background")
+        .resizable()
+        .aspectRatio(contentMode: .fill)
+        .ignoresSafeArea()
+} content: {
+    ContentView()
+}
+```
+
+Examples:
+
+```swift
+// Video background
+PersistentBackgroundNavigation {
+    VideoPlayerView(url: backgroundVideoURL)
+        .ignoresSafeArea()
+} content: {
+    ContentView()
+}
+
+// Custom pattern
+PersistentBackgroundNavigation {
+    ZStack {
+        Color.indigo
+        GeometryReader { geometry in
+            // Custom drawing code
+        }
+    }
+    .ignoresSafeArea()
+} content: {
+    ContentView()
+}
+
+// Animated gradient
+PersistentBackgroundNavigation {
+    AnimatedGradientView()
+        .ignoresSafeArea()
+} content: {
+    ContentView()
+}
+```
+
+The persistent architecture works with any SwiftUI view - your background stays consistent across all navigation transitions.
+
 ### Dynamic Palette Switching
 
 You can switch palettes dynamically with animations:

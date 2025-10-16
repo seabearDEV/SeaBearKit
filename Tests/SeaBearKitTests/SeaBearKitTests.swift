@@ -12,7 +12,7 @@ final class SeaBearKitTests: XCTestCase {
 
     func testLibraryMetadata() {
         XCTAssertEqual(SeaBearKit.name, "SeaBearKit")
-        XCTAssertEqual(SeaBearKit.version, "1.1.0")
+        XCTAssertEqual(SeaBearKit.version, "1.2.0")
         XCTAssertEqual(SeaBearKit.minimumIOSVersion, "17.0")
         XCTAssertEqual(SeaBearKit.recommendedIOSVersion, "18.0")
     }
