@@ -2,46 +2,35 @@
 //  PersistentBackgroundNavigation.swift
 //  IOSLayouts
 //
-//  NavigationStack wrapper that maintains a persistent background across all navigation transitions.
-//  This pattern was developed through iterative refinement to ensure background consistency.
-//
-//  CRITICAL: Uses .containerBackground(for: .navigation) { Color.clear } to ensure
-//  consistent navigation transition rendering and background persistence.
+//  NavigationStack wrapper with persistent background across navigation transitions.
+//  Child views call .clearNavigationBackground() to reveal the background.
 //
 
 import SwiftUI
 
 #if canImport(UIKit)
 
-/// A NavigationStack wrapper that maintains a persistent background during navigation transitions.
-///
-/// This component solves a common SwiftUI challenge: maintaining a consistent background
-/// across navigation transitions.
+/// NavigationStack wrapper that maintains a persistent background across all navigation transitions.
 ///
 /// ## Usage
 ///
 /// ```swift
-/// PersistentBackgroundNavigation(
-///     palette: .sunset,
-///     configuration: .full
-/// ) {
-///     YourRootView()
+/// PersistentBackgroundNavigation(palette: .sunset) {
+///     ContentView()
 /// }
 /// ```
 ///
-/// ## The Pattern
+/// Add `.clearNavigationBackground()` to each destination view:
 ///
-/// The magic is in the structure:
-/// 1. ZStack contains both background and NavigationStack
-/// 2. Background is positioned behind the entire NavigationStack
-/// 3. **EVERY view in the navigation hierarchy** must use `.containerBackground(for: .navigation) { Color.clear }`
-/// 4. This makes the navigation container transparent, revealing the persistent background
-///
-/// **IMPORTANT**: Each destination view must also add `.containerBackground(for: .navigation) { Color.clear }`,
-/// otherwise the background will disappear when navigating to that view.
-///
-/// Without this pattern, NavigationStack creates its own background that changes during
-/// transitions, causing visual inconsistencies.
+/// ```swift
+/// struct DetailView: View {
+///     var body: some View {
+///         Text("Detail View")
+///             .navigationTitle("Details")
+///             .clearNavigationBackground()
+///     }
+/// }
+/// ```
 ///
 public struct PersistentBackgroundNavigation<Content: View>: View {
     let palette: ColorPalette
@@ -70,13 +59,17 @@ public struct PersistentBackgroundNavigation<Content: View>: View {
 
             // Layer 2: NavigationStack with transparent container
             NavigationStack {
-                content
-                    // CRITICAL: This ensures consistent rendering
-                    // Makes the navigation container background transparent
-                    // so the persistent background remains visible
-                    .containerBackground(for: .navigation) {
-                        Color.clear
-                    }
+                if #available(iOS 18.0, *) {
+                    // iOS 18: Use containerBackground for perfect transparency
+                    content
+                        .containerBackground(for: .navigation) {
+                            Color.clear
+                        }
+                } else {
+                    // iOS 17: Root content doesn't need special handling
+                    // Child views will use .clearNavigationBackground()
+                    content
+                }
             }
         }
     }
@@ -147,7 +140,7 @@ extension PersistentBackgroundNavigation {
 
             VStack(spacing: 16) {
                 GlassNavigationButton(icon: "1.circle.fill", title: "Screen 1") {
-                    DetailView(title: "Screen 1", color: .red)
+                    DetailView(screenNumber: 1, color: .red)
                 }
             }
             .padding()
@@ -164,18 +157,6 @@ private struct DetailView: View {
     let screenNumber: Int
     let color: Color
     let depth: Int
-
-    // For backward compatibility with minimal preview
-    init(title: String, color: Color, depth: Int = 1) {
-        // Extract screen number from title like "Screen 1" or default to 1
-        if let number = Int(title.replacingOccurrences(of: "Screen ", with: "")) {
-            self.screenNumber = number
-        } else {
-            self.screenNumber = 1
-        }
-        self.color = color
-        self.depth = depth
-    }
 
     init(screenNumber: Int, color: Color, depth: Int = 1) {
         self.screenNumber = screenNumber
@@ -245,25 +226,38 @@ private struct DetailView: View {
         .padding(.top, 40)
         .navigationTitle(title)
         .navigationBarTitleDisplayMode(.inline)
-        .containerBackground(for: .navigation) {
-            Color.clear
-        }
+        .clearNavigationBackground()
     }
 }
 
 // MARK: - Glass Navigation Button
 
-/// Icon position for glass buttons
-private enum IconPosition {
-    case leading, trailing
+/// Shared glass material styling for NavigationLinks
+private struct GlassNavigationLinkStyle: ViewModifier {
+    @Binding var isPressed: Bool
+
+    func body(content: Content) -> some View {
+        content
+            .padding()
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(.regularMaterial)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(.white.opacity(isPressed ? 0.15 : 0))
+                    )
+            )
+            .shadow(color: .black.opacity(isPressed ? 0.05 : 0.15), radius: isPressed ? 4 : 10, y: isPressed ? 2 : 5)
+            .scaleEffect(isPressed ? 0.98 : 1.0)
+            .animation(.easeInOut(duration: 0.15), value: isPressed)
+    }
 }
 
-/// A NavigationLink styled with Liquid Glass material that handles pressed states properly
+/// A NavigationLink styled with glass material
 private struct GlassNavigationButton<Destination: View>: View {
     let icon: String
     let title: String
     let destination: Destination
-
     @State private var isPressed = false
 
     init(icon: String, title: String, @ViewBuilder destination: () -> Destination) {
@@ -273,9 +267,7 @@ private struct GlassNavigationButton<Destination: View>: View {
     }
 
     var body: some View {
-        NavigationLink {
-            destination
-        } label: {
+        NavigationLink(destination: destination) {
             HStack {
                 Image(systemName: icon)
                     .foregroundStyle(.blue)
@@ -285,84 +277,7 @@ private struct GlassNavigationButton<Destination: View>: View {
                 Image(systemName: "chevron.right")
                     .foregroundStyle(.secondary)
             }
-            .padding()
-            .background(
-                ZStack {
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(.regularMaterial)
-
-                    // Add subtle overlay on press for better visibility
-                    if isPressed {
-                        RoundedRectangle(cornerRadius: 12)
-                            .fill(.white.opacity(0.15))
-                    }
-                }
-            )
-            .shadow(color: .black.opacity(isPressed ? 0.05 : 0.15), radius: isPressed ? 4 : 10, y: isPressed ? 2 : 5)
-            .scaleEffect(isPressed ? 0.98 : 1.0)
-            .animation(.easeInOut(duration: 0.15), value: isPressed)
-        }
-        .buttonStyle(.plain) // Prevents default NavigationLink opacity change
-        .foregroundStyle(.primary)
-        .simultaneousGesture(
-            DragGesture(minimumDistance: 0)
-                .onChanged { _ in isPressed = true }
-                .onEnded { _ in isPressed = false }
-        )
-    }
-}
-
-/// A centered NavigationLink button styled with Liquid Glass material
-private struct GlassButton<Destination: View>: View {
-    let label: String
-    let icon: String
-    let iconPosition: IconPosition
-    let destination: Destination
-
-    @State private var isPressed = false
-
-    init(
-        label: String,
-        icon: String,
-        iconPosition: IconPosition = .leading,
-        @ViewBuilder destination: () -> Destination
-    ) {
-        self.label = label
-        self.icon = icon
-        self.iconPosition = iconPosition
-        self.destination = destination()
-    }
-
-    var body: some View {
-        NavigationLink {
-            destination
-        } label: {
-            HStack(spacing: 8) {
-                if iconPosition == .leading {
-                    Image(systemName: icon)
-                }
-                Text(label)
-                    .fontWeight(.semibold)
-                if iconPosition == .trailing {
-                    Image(systemName: icon)
-                }
-            }
-            .padding()
-            .background(
-                ZStack {
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(.regularMaterial)
-
-                    // Add subtle overlay on press for better visibility
-                    if isPressed {
-                        RoundedRectangle(cornerRadius: 12)
-                            .fill(.white.opacity(0.15))
-                    }
-                }
-            )
-            .shadow(color: .black.opacity(isPressed ? 0.05 : 0.15), radius: isPressed ? 4 : 10, y: isPressed ? 2 : 5)
-            .scaleEffect(isPressed ? 0.98 : 1.0)
-            .animation(.easeInOut(duration: 0.15), value: isPressed)
+            .modifier(GlassNavigationLinkStyle(isPressed: $isPressed))
         }
         .buttonStyle(.plain)
         .foregroundStyle(.primary)
@@ -372,6 +287,45 @@ private struct GlassButton<Destination: View>: View {
                 .onEnded { _ in isPressed = false }
         )
     }
+}
+
+/// A centered NavigationLink button with glass material
+private struct GlassButton<Destination: View>: View {
+    let label: String
+    let icon: String
+    let iconTrailing: Bool
+    let destination: Destination
+    @State private var isPressed = false
+
+    init(label: String, icon: String, iconPosition: IconPosition = .leading, @ViewBuilder destination: () -> Destination) {
+        self.label = label
+        self.icon = icon
+        self.iconTrailing = iconPosition == .trailing
+        self.destination = destination()
+    }
+
+    var body: some View {
+        NavigationLink(destination: destination) {
+            HStack(spacing: 8) {
+                if !iconTrailing { Image(systemName: icon) }
+                Text(label).fontWeight(.semibold)
+                if iconTrailing { Image(systemName: icon) }
+            }
+            .modifier(GlassNavigationLinkStyle(isPressed: $isPressed))
+        }
+        .buttonStyle(.plain)
+        .foregroundStyle(.primary)
+        .simultaneousGesture(
+            DragGesture(minimumDistance: 0)
+                .onChanged { _ in isPressed = true }
+                .onEnded { _ in isPressed = false }
+        )
+    }
+}
+
+/// Icon position for glass buttons
+private enum IconPosition {
+    case leading, trailing
 }
 
 #endif // canImport(UIKit)

@@ -32,6 +32,63 @@ struct MyApp: App {
 
 This provides a persistent gradient background across navigation transitions.
 
+## Navigation
+
+IOSLayouts offers two ways to handle navigation - choose what fits your style:
+
+### Automatic (Recommended)
+
+Use `PersistentNavigationLink` for zero-friction navigation:
+
+```swift
+import IOSLayouts
+
+struct ContentView: View {
+    var body: some View {
+        VStack {
+            PersistentNavigationLink("View Profile") {
+                ProfileView()  // Background persists automatically!
+            }
+
+            // Custom label
+            PersistentNavigationLink {
+                SettingsView()
+            } label: {
+                Label("Settings", systemImage: "gear")
+            }
+        }
+        .navigationTitle("Home")
+    }
+}
+```
+
+Value-based navigation:
+```swift
+NavigationStack {
+    List(items) { item in
+        Button(item.name) {
+            selectedItem = item
+        }
+    }
+}
+.persistentNavigationDestination(for: Item.self) { item in
+    ItemDetailView(item: item)  // Automatic!
+}
+```
+
+### Manual (Advanced)
+
+Use standard SwiftUI with `.clearNavigationBackground()`:
+
+```swift
+NavigationLink("Advanced Settings") {
+    AdvancedSettingsView()
+        .clearNavigationBackground()
+}
+```
+
+Both approaches work together - mix and match as needed!
+
 ## Choose a Palette
 
 ```swift
@@ -91,9 +148,11 @@ var body: some Scene {
 
 ## Requirements
 
-- iOS 18.0+
+- iOS 17.0+ (iOS 18+ recommended)
 - Swift 6.0+
-- Xcode 16.0+
+- Xcode 15.0+
+
+**Platform Note**: iOS 18+ provides the best experience. iOS 17 uses a fallback approach that works well for most use cases.
 
 ## Next Steps
 

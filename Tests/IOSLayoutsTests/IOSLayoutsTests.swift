@@ -12,7 +12,9 @@ final class IOSLayoutsTests: XCTestCase {
 
     func testLibraryMetadata() {
         XCTAssertEqual(IOSLayouts.name, "IOSLayouts")
-        XCTAssertEqual(IOSLayouts.version, "1.0.0")
+        XCTAssertEqual(IOSLayouts.version, "1.1.0")
+        XCTAssertEqual(IOSLayouts.minimumIOSVersion, "17.0")
+        XCTAssertEqual(IOSLayouts.recommendedIOSVersion, "18.0")
     }
 
     func testColorPaletteCreation() {

@@ -6,8 +6,8 @@ import PackageDescription
 let package = Package(
     name: "IOSLayouts",
     platforms: [
-        .iOS(.v18), // Liquid Glass materials available in iOS 18+
-        .macOS(.v15)
+        .iOS(.v17), // iOS 17+ with best experience on iOS 18+
+        .macOS(.v14)
     ],
     products: [
         // Library product for the reusable layouts

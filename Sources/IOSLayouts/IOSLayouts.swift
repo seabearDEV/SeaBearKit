@@ -19,6 +19,15 @@ import SwiftUI
 /// - `PersistentBackgroundNavigation` - NavigationStack wrapper that maintains background during transitions
 /// - `GradientBackground` - Static gradient background with vignette effect
 ///
+/// ### Automatic Navigation (Recommended)
+/// - `PersistentNavigationLink` - Zero-friction NavigationLink that auto-applies background transparency
+/// - `.persistentNavigationDestination(for:)` - Auto-wrapping value-based navigation
+/// - `.persistentNavigationDestination(item:)` - Auto-wrapping optional binding navigation
+/// - `.persistentNavigationDestination(isPresented:)` - Auto-wrapping boolean navigation
+///
+/// ### Manual Navigation (Advanced)
+/// - `.clearNavigationBackground()` - Manual modifier for precise control
+///
 /// ### Color System
 /// - `ColorPalette` - Flexible color palette with gradient configuration
 /// - Sample palettes: `.sunset`, `.ocean`, `.forest`, `.monochrome`
@@ -41,12 +50,29 @@ import SwiftUI
 ///         }
 ///     }
 /// }
+///
+/// // In your views - Automatic (Recommended)
+/// PersistentNavigationLink("Details") {
+///     DetailView()  // Background persists automatically!
+/// }
+///
+/// // Or Manual (Advanced)
+/// NavigationLink("Details") {
+///     DetailView()
+///         .clearNavigationBackground()
+/// }
 /// ```
 ///
 public struct IOSLayouts {
     /// Library version
-    public static let version = "1.0.0"
+    public static let version = "1.1.0"
 
     /// Library name
     public static let name = "IOSLayouts"
+
+    /// Minimum iOS version supported
+    public static let minimumIOSVersion = "17.0"
+
+    /// Recommended iOS version for best experience
+    public static let recommendedIOSVersion = "18.0"
 }

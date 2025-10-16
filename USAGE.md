@@ -114,6 +114,124 @@ BackgroundConfiguration.minimal
 BackgroundConfiguration(showGradient: true)
 ```
 
+## Navigation Patterns
+
+IOSLayouts provides flexible navigation options to match your coding style and project needs.
+
+### Automatic Navigation (Recommended)
+
+Use convenience wrappers that automatically handle background persistence:
+
+#### PersistentNavigationLink
+
+Drop-in replacement for `NavigationLink`:
+
+```swift
+// Simple text label
+PersistentNavigationLink("View Profile") {
+    ProfileView()  // Background persists automatically!
+}
+
+// Custom label
+PersistentNavigationLink {
+    SettingsView()
+} label: {
+    Label("Settings", systemImage: "gear")
+        .foregroundStyle(.primary)
+}
+```
+
+#### Value-Based Navigation
+
+For programmatic navigation with state:
+
+```swift
+struct ItemListView: View {
+    @State private var selectedItem: Item?
+
+    var body: some View {
+        NavigationStack {
+            List(items) { item in
+                Button(item.name) {
+                    selectedItem = item
+                }
+            }
+        }
+        .persistentNavigationDestination(for: Item.self) { item in
+            ItemDetailView(item: item)  // Automatic background!
+        }
+    }
+}
+```
+
+#### Boolean-Based Navigation
+
+For modal-style navigation:
+
+```swift
+struct ContentView: View {
+    @State private var showingDetail = false
+
+    var body: some View {
+        Button("Show Details") {
+            showingDetail = true
+        }
+        .persistentNavigationDestination(isPresented: $showingDetail) {
+            DetailView()  // Automatic background!
+        }
+    }
+}
+```
+
+### Manual Navigation (Advanced Control)
+
+Use standard SwiftUI navigation with explicit background control:
+
+```swift
+NavigationLink("Advanced Settings") {
+    AdvancedSettingsView()
+        .clearNavigationBackground()  // Manual control
+        .customModifier()               // Add your modifiers
+}
+```
+
+### When to Use Each Approach
+
+**Automatic (PersistentNavigationLink)**
+- ✅ Large apps with many navigation screens
+- ✅ Team projects (junior-friendly, can't forget)
+- ✅ When you want it to "just work"
+- ✅ Reduces boilerplate
+
+**Manual (.clearNavigationBackground())**
+- ✅ Edge cases requiring precise control
+- ✅ When adding custom modifiers to destinations
+- ✅ Advanced customization scenarios
+- ✅ Existing codebases (minimal changes)
+
+**Mix and Match**
+Both approaches work together perfectly:
+
+```swift
+struct MenuView: View {
+    var body: some View {
+        VStack {
+            // Automatic for most screens
+            PersistentNavigationLink("Profile") {
+                ProfileView()
+            }
+
+            // Manual for special case
+            NavigationLink("Advanced") {
+                AdvancedView()
+                    .clearNavigationBackground()
+                    .customSetup()
+            }
+        }
+    }
+}
+```
+
 ## Advanced Usage
 
 ### Dynamic Palette Switching
@@ -193,28 +311,28 @@ The backgrounds automatically adapt to:
 
 ## Examples
 
-### Simple Menu Screen
+### Simple Menu Screen (Automatic)
 
 ```swift
 struct MenuView: View {
     var body: some View {
         List {
-            NavigationLink("Play") { GameView() }
-            NavigationLink("Settings") { SettingsView() }
-            NavigationLink("About") { AboutView() }
+            PersistentNavigationLink("Play") { GameView() }
+            PersistentNavigationLink("Settings") { SettingsView() }
+            PersistentNavigationLink("About") { AboutView() }
         }
         .navigationTitle("Main Menu")
     }
 }
 ```
 
-### Deep Navigation
+### Deep Navigation (Automatic)
 
 ```swift
 struct RootView: View {
     var body: some View {
         List(categories) { category in
-            NavigationLink(category.name) {
+            PersistentNavigationLink(category.name) {
                 CategoryView(category: category)
             }
         }
@@ -226,7 +344,7 @@ struct CategoryView: View {
 
     var body: some View {
         List(category.items) { item in
-            NavigationLink(item.name) {
+            PersistentNavigationLink(item.name) {
                 DetailView(item: item)
             }
         }
@@ -235,15 +353,80 @@ struct CategoryView: View {
 }
 ```
 
-The persistent background maintains consistency across all navigation hierarchy levels.
+The persistent background maintains consistency across all navigation hierarchy levels - no manual modifiers needed!
+
+### Value-Based List Navigation
+
+```swift
+struct ProductListView: View {
+    @State private var products: [Product] = [...]
+    @State private var selectedProduct: Product?
+
+    var body: some View {
+        List(products) { product in
+            Button {
+                selectedProduct = product
+            } label: {
+                ProductRowView(product: product)
+            }
+        }
+        .persistentNavigationDestination(for: Product.self) { product in
+            ProductDetailView(product: product)
+        }
+    }
+}
+```
+
+### Manual Approach (Advanced)
+
+For cases where you need precise control:
+
+```swift
+struct AdvancedMenuView: View {
+    var body: some View {
+        List {
+            NavigationLink("Standard") {
+                StandardView()
+                    .clearNavigationBackground()
+            }
+
+            NavigationLink("Custom") {
+                CustomView()
+                    .clearNavigationBackground()
+                    .customModifier()
+                    .specialBehavior()
+            }
+        }
+    }
+}
+```
 
 ## Troubleshooting
 
 ### Background Inconsistency During Navigation
 
-Ensure `PersistentBackgroundNavigation` is used rather than manual `NavigationStack` creation. The wrapper applies the required `.containerBackground(for: .navigation)` modifier.
+**Quick Fix**: Use `PersistentNavigationLink` instead of `NavigationLink`:
 
-**Note**: All destination views must include `.containerBackground(for: .navigation) { Color.clear }`. Refer to **[IMPORTANT.md](IMPORTANT.md)** for implementation details.
+```swift
+// ❌ May lose background
+NavigationLink("Details") {
+    DetailView()
+}
+
+// ✅ Background persists automatically
+PersistentNavigationLink("Details") {
+    DetailView()
+}
+```
+
+**Alternative**: If using standard `NavigationLink`, add `.clearNavigationBackground()` to each destination view:
+
+```swift
+NavigationLink("Details") {
+    DetailView()
+        .clearNavigationBackground()  // Required for manual approach
+}
+```
 
 ### Gradient Not Visible
 

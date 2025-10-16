@@ -37,19 +37,21 @@ struct MainMenuView: View {
     var body: some View {
         List {
             // Liquid Glass: System List automatically adopts materials
-            Section("Examples") {
-                NavigationLink("Simple Navigation") {
+            Section("Automatic Navigation (Recommended)") {
+                PersistentNavigationLink("Simple Navigation") {
                     SimpleNavigationDemo()
                 }
 
-                NavigationLink("Deep Navigation") {
+                PersistentNavigationLink("Deep Navigation (5 levels)") {
                     DeepNavigationDemo()
                 }
 
-                NavigationLink("List with Details") {
+                PersistentNavigationLink("List with Details") {
                     ListDemo()
                 }
+            }
 
+            Section("Manual Navigation (Advanced)") {
                 NavigationLink("Form Example") {
                     FormDemo()
                 }
@@ -91,7 +93,7 @@ struct MainMenuView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("IOSLayouts Demo")
                         .font(.headline)
-                    Text("Showcasing the PersistentBackgroundNavigation pattern with gradient backgrounds. Navigate between screens to observe the persistent background during transitions.")
+                    Text("Showcasing two navigation approaches: Automatic (PersistentNavigationLink) for zero friction, and Manual (.clearNavigationBackground()) for advanced control. Both maintain perfect background persistence.")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
@@ -112,15 +114,15 @@ struct SimpleNavigationDemo: View {
                 .font(.system(size: 60))
                 .foregroundStyle(.green)
 
-            Text("Simple Navigation")
+            Text("Automatic Navigation")
                 .font(.title)
                 .fontWeight(.bold)
 
-            Text("The background persists during navigation transitions, maintaining visual consistency throughout the hierarchy.")
+            Text("Uses PersistentNavigationLink for zero-friction background persistence. No manual modifiers needed!")
                 .multilineTextAlignment(.center)
                 .padding()
 
-            NavigationLink("Next Screen") {
+            PersistentNavigationLink("Next Screen") {
                 DetailScreen(
                     title: "Detail",
                     icon: "star.fill",
@@ -132,7 +134,6 @@ struct SimpleNavigationDemo: View {
         }
         .navigationTitle("Simple Navigation")
         .navigationBarTitleDisplayMode(.inline)
-        .clearNavigationBackground()
     }
 }
 
@@ -149,18 +150,17 @@ struct DeepNavigationDemo: View {
                 .font(.title)
                 .fontWeight(.bold)
 
-            Text("Navigate through multiple levels and observe how the persistent background maintains visual continuity.")
+            Text("Navigate through 5 levels using PersistentNavigationLink. Background stays consistent automatically.")
                 .multilineTextAlignment(.center)
                 .padding()
 
-            NavigationLink("Start Journey") {
+            PersistentNavigationLink("Start Journey") {
                 DeepLevelView(level: 1)
             }
             .buttonStyle(.borderedProminent)
         }
         .navigationTitle("Deep Navigation")
         .navigationBarTitleDisplayMode(.inline)
-        .clearNavigationBackground()
     }
 }
 
@@ -189,7 +189,7 @@ struct DeepLevelView: View {
                 .padding(.bottom)
 
             if level < 5 {
-                NavigationLink("Continue to Level \(level + 1)") {
+                PersistentNavigationLink("Continue to Level \(level + 1)") {
                     DeepLevelView(level: level + 1)
                 }
                 .buttonStyle(.borderedProminent)
@@ -200,14 +200,13 @@ struct DeepLevelView: View {
                 Text("Maximum Depth Reached")
                     .font(.title2)
                     .fontWeight(.semibold)
-                Text("Background remains consistent at all levels")
+                Text("Background automatic at all 5 levels!")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
         }
         .navigationTitle("Level \(level)")
         .navigationBarTitleDisplayMode(.inline)
-        .clearNavigationBackground()
     }
 }
 
@@ -225,7 +224,7 @@ struct ListDemo: View {
     var body: some View {
         List {
             ForEach(items.indices, id: \.self) { index in
-                NavigationLink {
+                PersistentNavigationLink {
                     DetailScreen(
                         title: items[index].0,
                         icon: items[index].1,
@@ -239,7 +238,6 @@ struct ListDemo: View {
         }
         .navigationTitle("List Example")
         .navigationBarTitleDisplayMode(.inline)
-        .clearNavigationBackground()
     }
 }
 

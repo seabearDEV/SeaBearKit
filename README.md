@@ -1,5 +1,10 @@
 # IOSLayouts
 
+[![Swift Version](https://img.shields.io/badge/Swift-6.0-orange.svg)](https://swift.org)
+[![Platforms](https://img.shields.io/badge/Platforms-iOS%2017+%20|%20macOS%2014+-blue.svg)](https://developer.apple.com)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![SPM Compatible](https://img.shields.io/badge/SPM-Compatible-brightgreen.svg)](https://swift.org/package-manager)
+
 A collection of production-ready SwiftUI layout patterns and UI components for iOS development.
 
 ## Core Feature: Persistent Background Navigation
@@ -10,7 +15,9 @@ This pattern was developed through extensive iteration to address SwiftUI's navi
 
 ## Features
 
+- **Zero-Friction Navigation**: Automatic background persistence without manual modifiers
 - **Persistent Background System**: NavigationStack wrapper that maintains backgrounds during transitions
+- **Flexible API**: Choose automatic convenience wrappers or manual control
 - **Gradient Backgrounds**: Configurable gradients with vignette effects (iOS 18+ Liquid Glass compatible)
 - **Color Palettes**: Extensible palette system with nine built-in themes
 - **Performance Optimized**: Static gradients with minimal battery impact
@@ -19,6 +26,8 @@ This pattern was developed through extensive iteration to address SwiftUI's navi
 - **Pure SwiftUI**: No external dependencies
 
 ## Quick Start
+
+### 1. Wrap your app in PersistentBackgroundNavigation
 
 ```swift
 import SwiftUI
@@ -36,20 +45,32 @@ struct MyApp: App {
 }
 ```
 
-This provides a gradient background that persists across all navigation transitions.
+### 2. Use navigation in your views
 
-**Important**: Every destination view in your navigation hierarchy must include:
+**Automatic (Recommended)** - Zero friction, just works:
 ```swift
-.containerBackground(for: .navigation) { Color.clear }
+PersistentNavigationLink("View Details") {
+    DetailView()  // Background persists automatically!
+}
 ```
 
-Refer to **[IMPORTANT.md](IMPORTANT.md)** for implementation details.
+**Manual (Advanced)** - For precise control:
+```swift
+NavigationLink("View Details") {
+    DetailView()
+        .clearNavigationBackground()
+}
+```
+
+Both approaches work perfectly - choose what fits your style!
 
 ## Requirements
 
-- iOS 18.0+ (required for `.containerBackground(for: .navigation)` API)
+- iOS 17.0+ (iOS 18+ recommended for best experience)
 - Swift 6.0+
-- Xcode 16.0+
+- Xcode 15.0+
+
+**Note**: While iOS 17 is supported, iOS 18+ provides the optimal experience using `.containerBackground(for: .navigation)`. iOS 17 uses a fallback approach that works well in most cases.
 
 ## Installation
 
@@ -64,6 +85,63 @@ dependencies: [
 ```
 
 Or in Xcode: File → Add Package Dependencies → Enter repository URL
+
+## Navigation Approaches
+
+IOSLayouts provides flexibility to match your coding style:
+
+### Automatic (Recommended for most cases)
+
+Use `PersistentNavigationLink` for zero-friction navigation:
+
+```swift
+PersistentNavigationLink("Details") {
+    DetailView()
+}
+
+// Custom label
+PersistentNavigationLink {
+    DetailView()
+} label: {
+    HStack {
+        Image(systemName: "star")
+        Text("Featured")
+    }
+}
+```
+
+Value-based navigation:
+```swift
+NavigationStack {
+    List(items) { item in
+        Button(item.name) {
+            selectedItem = item
+        }
+    }
+}
+.persistentNavigationDestination(for: Item.self) { item in
+    ItemDetailView(item: item)
+}
+```
+
+### Manual (Advanced control)
+
+Use standard `NavigationLink` with `.clearNavigationBackground()`:
+
+```swift
+NavigationLink("Settings") {
+    SettingsView()
+        .clearNavigationBackground()
+        .customModifier()  // Add your own modifiers
+}
+```
+
+### When to use each:
+
+- **Automatic**: Large apps, team projects, when you want it to "just work"
+- **Manual**: Edge cases, when you need additional modifiers, precise control
+
+Both approaches coexist perfectly - use what makes sense for each screen.
 
 ## Color Palettes
 
@@ -152,15 +230,48 @@ Navigate to `PersistentBackgroundNavigation.swift` and open Canvas (⌥⌘↩) f
 
 Complete demo instructions available in **[DEMO.md](DEMO.md)**
 
+## Development
+
+### Running Tests
+
+```bash
+# Run all tests
+swift test
+
+# Build the package
+swift build
+
+# Open in Xcode
+open Package.swift
+```
+
+### Testing in Your Project
+
+Add the package locally for testing:
+
+```swift
+// In your Package.swift
+dependencies: [
+    .package(path: "/path/to/ios-layouts")
+]
+```
+
+Or use Xcode: **File → Add Package Dependencies → Add Local**
+
 ## Contributing
 
-Contributions should maintain:
+Contributions are welcome! Please read **[CONTRIBUTING.md](CONTRIBUTING.md)** for:
+- Development setup
+- Code standards
+- Testing requirements
+- Pull request process
 
-- iOS 18+ compatibility (`.containerBackground(for: .navigation)` API requirement)
+All contributions should maintain:
+- iOS 17+ compatibility (iOS 18+ for optimal experience)
 - Swift 6 strict concurrency compliance
-- Performance characteristics (battery impact testing required)
-- Light and dark mode support
+- All tests passing (`swift test`)
 - Documentation updates for API changes
+- CHANGELOG.md updates
 
 ## License
 

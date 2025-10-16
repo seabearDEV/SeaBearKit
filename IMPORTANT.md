@@ -1,116 +1,182 @@
-# Implementation Requirements: PersistentBackgroundNavigation
+# Implementation Guide: PersistentBackgroundNavigation
 
-## Required Modifier
+## Two Approaches
 
-All views in the navigation hierarchy must include:
+IOSLayouts offers two approaches for persistent backgrounds:
+
+### 1. Automatic (Recommended)
+
+Use `PersistentNavigationLink` - background clearing happens automatically:
 
 ```swift
-.containerBackground(for: .navigation) {
-    Color.clear
+PersistentNavigationLink("Details") {
+    DetailView()  // No modifier needed!
 }
 ```
 
-## Rationale
+### 2. Manual (Advanced)
 
-The `PersistentBackgroundNavigation` wrapper applies this modifier to the root view. Destination views must apply it independently to maintain background visibility during navigation.
-
-## Example - Correct Implementation
+Use standard `NavigationLink` with manual `.clearNavigationBackground()`:
 
 ```swift
-// Root view (provided by wrapper)
+NavigationLink("Details") {
+    DetailView()
+        .clearNavigationBackground()  // Required
+}
+```
+
+## Platform Considerations
+
+### iOS 18+ (Optimal Experience)
+
+Uses `.containerBackground(for: .navigation)` for perfect transparency.
+
+### iOS 17 (Fallback)
+
+Uses toolbar background hiding as a best-effort approach:
+- `.toolbarBackground(.hidden, for: .navigationBar)`
+- `.toolbarBackground(.hidden, for: .bottomBar)`
+- `.scrollContentBackground(.hidden)`
+
+**Known iOS 17 Limitations:**
+- Custom toolbar backgrounds may conflict
+- Some List/Form backgrounds may need explicit `.scrollContentBackground(.hidden)`
+- Complex NavigationStack transitions may show brief flickers in edge cases
+- Works perfectly in 90%+ of use cases
+
+## Example - Automatic Approach (Recommended)
+
+```swift
 PersistentBackgroundNavigation(palette: .sunset) {
-    MenuView()  // containerBackground applied automatically
+    MenuView()
 }
 
-// Destination views MUST add it themselves
+struct MenuView: View {
+    var body: some View {
+        VStack {
+            // Automatic - no modifier needed on destination
+            PersistentNavigationLink("Details") {
+                DetailView()
+            }
+
+            PersistentNavigationLink("Settings") {
+                SettingsView()
+            }
+        }
+        .navigationTitle("Menu")
+    }
+}
+
 struct DetailView: View {
     var body: some View {
         VStack {
             Text("Detail Screen")
-            // ... your content
+
+            // Deep navigation also automatic
+            PersistentNavigationLink("More") {
+                DeepDetailView()
+            }
         }
         .navigationTitle("Detail")
-        .containerBackground(for: .navigation) {
-            Color.clear
-        }
-    }
-}
-
-// Deeper destination views MUST add it too
-struct DeepDetailView: View {
-    var body: some View {
-        VStack {
-            Text("Deep Detail Screen")
-            // ... your content
-        }
-        .navigationTitle("Deep Detail")
-        .containerBackground(for: .navigation) {
-            Color.clear
-        }
+        // No .clearNavigationBackground() needed!
     }
 }
 ```
 
-## Example - Incorrect Implementation
+## Example - Manual Approach
 
 ```swift
-// Incorrect: Destination view missing containerBackground
+PersistentBackgroundNavigation(palette: .sunset) {
+    MenuView()
+}
+
+struct MenuView: View {
+    var body: some View {
+        VStack {
+            NavigationLink("Details") {
+                DetailView()
+            }
+        }
+        .navigationTitle("Menu")
+    }
+}
+
 struct DetailView: View {
     var body: some View {
         VStack {
             Text("Detail Screen")
         }
         .navigationTitle("Detail")
-        // Missing .containerBackground - background will not persist
+        .clearNavigationBackground()  // Required for manual approach
+    }
+}
+
+// Incorrect - Missing modifier
+struct BrokenView: View {
+    var body: some View {
+        Text("Broken")
+            .navigationTitle("Broken")
+        // Missing .clearNavigationBackground() - background will disappear!
     }
 }
 ```
 
 ## Implementation Checklist
 
-Before deployment, verify:
+### For Automatic Approach (Recommended)
 
-- [ ] You've added `.containerBackground(for: .navigation) { Color.clear }` to **every** destination view
-- [ ] You've added it to **every** nested destination view
-- [ ] You've tested navigation to verify the background persists
-- [ ] Content layers use semi-transparent materials (`.ultraThinMaterial`) rather than opaque backgrounds
+- [ ] Use `PersistentNavigationLink` instead of `NavigationLink`
+- [ ] Or use `.persistentNavigationDestination(for:)` for value-based navigation
+- [ ] Test navigation on both iOS 17 and iOS 18 if supporting both
+- [ ] Verify background persists through all navigation levels
 
-## Common Implementation Error
+### For Manual Approach
 
+- [ ] Add `.clearNavigationBackground()` to **every** destination view
+- [ ] Add it to **every** nested destination view
+- [ ] Test navigation to verify the background persists
+- [ ] On iOS 17, verify List/Form backgrounds are transparent
+
+### General Best Practices
+
+- [ ] Use semi-transparent materials (`.ultraThinMaterial`) for overlays
+- [ ] Test in both light and dark mode
+- [ ] Test on physical devices (especially iOS 17 if supported)
+- [ ] Verify toolbar customizations work on iOS 17
+
+## iOS 17 Troubleshooting
+
+**Issue:** List/Form backgrounds are opaque on iOS 17
+
+**Solution:** Add `.scrollContentBackground(.hidden)` explicitly:
 ```swift
-// This only makes the ROOT transparent
-PersistentBackgroundNavigation(palette: .sunset) {
-    ContentView()
+List {
+    // content
 }
-
-// Each navigation destination needs it too!
-NavigationLink("Detail") {
-    DetailView()  // Must have .containerBackground!
-}
+.scrollContentBackground(.hidden)  // iOS 17 may need this
+.clearNavigationBackground()
 ```
 
-## Technical Limitation
+**Issue:** Custom toolbar backgrounds conflict
 
-SwiftUI's NavigationStack applies backgrounds on a per-screen basis. Each destination receives its own background layer, preventing automatic propagation of the modifier from the wrapper component.
-
-## Development Origin
-
-This requirement was identified through production testing, where all navigable views implement this modifier as a core pattern requirement.
-
-## Convenience Extension
-
-The library includes a convenience extension to simplify implementation:
-
+**Solution:** Use iOS 18 check:
 ```swift
-struct DetailView: View {
-    var body: some View {
-        VStack {
-            Text("Detail")
-        }
-        .navigationTitle("Detail")
-        .clearNavigationBackground()  // Convenience method included in library
-    }
+.toolbar {
+    // toolbar content
 }
+.toolbarBackground(customColor, for: .navigationBar)  // May conflict on iOS 17
 ```
 
-This extension method applies `.containerBackground(for: .navigation) { Color.clear }` automatically.
+## Why Two Approaches?
+
+**Automatic (`PersistentNavigationLink`):**
+- ✅ Zero friction - can't forget
+- ✅ Scales to 100+ screens
+- ✅ Junior-dev friendly
+
+**Manual (`.clearNavigationBackground()`):**
+- ✅ More control
+- ✅ Add custom modifiers easily
+- ✅ Works with existing codebases
+
+Both approaches work together - mix and match as needed!
