@@ -80,7 +80,7 @@ Add to your `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/seabearDEV/ios-layouts.git", from: "1.0.0")
+    .package(url: "https://github.com/seabearDEV/SeaBearKit.git", from: "1.0.0")
 ]
 ```
 
@@ -221,8 +221,8 @@ This pattern was developed through iterative refinement to resolve background co
 To view interactive previews:
 
 ```bash
-git clone https://github.com/seabearDEV/ios-layouts.git
-cd ios-layouts
+git clone https://github.com/seabearDEV/SeaBearKit.git
+cd SeaBearKit
 open Package.swift
 ```
 
@@ -252,7 +252,7 @@ Add the package locally for testing:
 ```swift
 // In your Package.swift
 dependencies: [
-    .package(path: "/path/to/ios-layouts")
+    .package(path: "/path/to/SeaBearKit")
 ]
 ```
 

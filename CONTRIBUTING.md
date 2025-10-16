@@ -20,8 +20,8 @@ Thank you for your interest in contributing to SeaBearKit! This guide will help 
 
 1. **Fork and Clone**
    ```bash
-   git clone https://github.com/YOUR-USERNAME/ios-layouts.git
-   cd ios-layouts
+   git clone https://github.com/YOUR-USERNAME/SeaBearKit.git
+   cd SeaBearKit
    ```
 
 2. **Open in Xcode**
@@ -65,7 +65,7 @@ To test your changes in a real app:
 ```swift
 // In your test app's Package.swift
 dependencies: [
-    .package(path: "/path/to/your/ios-layouts")
+    .package(path: "/path/to/your/SeaBearKit")
 ]
 ```
 

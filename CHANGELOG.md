@@ -93,5 +93,5 @@ PersistentNavigationLink("Details") {
 }
 ```
 
-[1.1.0]: https://github.com/seabearDEV/ios-layouts/compare/v1.0.0...v1.1.0
-[1.0.0]: https://github.com/seabearDEV/ios-layouts/releases/tag/v1.0.0
+[1.1.0]: https://github.com/seabearDEV/SeaBearKit/compare/v1.0.0...v1.1.0
+[1.0.0]: https://github.com/seabearDEV/SeaBearKit/releases/tag/v1.0.0

@@ -121,7 +121,7 @@ RadialGradient overlay adds depth:
 ## File Structure
 
 ```
-ios-layouts/
+SeaBearKit/
 ├── Package.swift                              # Swift Package manifest
 ├── Sources/
 │   ├── SeaBearKit/                           # Main library

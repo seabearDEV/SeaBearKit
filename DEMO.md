@@ -34,7 +34,7 @@ Creating a standalone application with full demo features:
 
 2. **Add the SeaBearKit package:**
    - File → Add Package Dependencies
-   - Enter local path: `/Users/kh/Projects/github.com/seabearDEV/ios-layouts`
+   - Enter local path: `/Users/kh/Projects/github.com/seabearDEV/SeaBearKit`
    - Add to project
 
 3. **Replace the app file content** with the demo code from:

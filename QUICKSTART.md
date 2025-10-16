@@ -7,7 +7,7 @@ SeaBearKit integration guide.
 Add to your Xcode project: **File → Add Package Dependencies**
 
 ```
-https://github.com/seabearDEV/ios-layouts.git
+https://github.com/seabearDEV/SeaBearKit.git
 ```
 
 ## Basic Usage
@@ -181,4 +181,4 @@ This pattern was refined through production use.
 
 ## Support
 
-- GitHub Issues: [github.com/seabearDEV/ios-layouts/issues](https://github.com/seabearDEV/ios-layouts/issues)
+- GitHub Issues: [github.com/seabearDEV/SeaBearKit/issues](https://github.com/seabearDEV/SeaBearKit/issues)

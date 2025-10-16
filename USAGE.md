@@ -10,7 +10,7 @@ Add SeaBearKit to your project:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/seabearDEV/ios-layouts.git", from: "1.0.0")
+    .package(url: "https://github.com/seabearDEV/SeaBearKit.git", from: "1.0.0")
 ]
 ```
 
