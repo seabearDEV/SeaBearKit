@@ -11,7 +11,7 @@ Using Xcode's preview system:
    open Package.swift
    ```
 
-2. Navigate to `Sources/IOSLayouts/Navigation/PersistentBackgroundNavigation.swift`
+2. Navigate to `Sources/SeaBearKit/Navigation/PersistentBackgroundNavigation.swift`
 
 3. Open the Canvas (⌥⌘↩ or Editor → Canvas)
 
@@ -28,11 +28,11 @@ Creating a standalone application with full demo features:
 1. **Create a new iOS App in Xcode:**
    - File → New → Project
    - Choose "iOS" → "App"
-   - Product Name: "IOSLayoutsDemo"
+   - Product Name: "SeaBearKitDemo"
    - Interface: SwiftUI
    - Language: Swift
 
-2. **Add the IOSLayouts package:**
+2. **Add the SeaBearKit package:**
    - File → Add Package Dependencies
    - Enter local path: `/Users/kh/Projects/github.com/seabearDEV/ios-layouts`
    - Add to project
@@ -48,7 +48,7 @@ Swift Playground implementation:
 
 ```swift
 import SwiftUI
-import IOSLayouts
+import SeaBearKit
 import PlaygroundSupport
 
 struct ContentView: View {
@@ -118,7 +118,7 @@ ZStack {
 }
 ```
 
-IOSLayouts approach:
+SeaBearKit approach:
 
 ```swift
 // Consistent rendering implementation

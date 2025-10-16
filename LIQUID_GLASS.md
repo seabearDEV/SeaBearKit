@@ -6,7 +6,7 @@ This library is fully compliant with iOS 18+ Liquid Glass design principles.
 
 Liquid Glass is Apple's design language that combines "optical properties of glass with a sense of fluidity." It uses system materials and effects to create modern, translucent interfaces that adapt to their context.
 
-## How IOSLayouts Adopts Liquid Glass
+## How SeaBearKit Adopts Liquid Glass
 
 ### System Framework Integration
 
@@ -183,7 +183,7 @@ This implementation is future-proof because:
 .background(.ultraThinMaterial)
 ```
 
-### IOSLayouts Approach
+### SeaBearKit Approach
 ```swift
 // Persistent gradient + system materials
 PersistentBackgroundNavigation(palette: .sunset) {
@@ -200,7 +200,7 @@ PersistentBackgroundNavigation(palette: .sunset) {
 
 ## Summary
 
-IOSLayouts embraces Liquid Glass by:
+SeaBearKit embraces Liquid Glass by:
 1. Using system frameworks exclusively
 2. Making navigation containers transparent
 3. Letting system components adopt materials automatically

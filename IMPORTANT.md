@@ -2,7 +2,7 @@
 
 ## Two Approaches
 
-IOSLayouts offers two approaches for persistent backgrounds:
+SeaBearKit offers two approaches for persistent backgrounds:
 
 ### 1. Automatic (Recommended)
 

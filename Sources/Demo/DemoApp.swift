@@ -1,12 +1,12 @@
 //
 //  DemoApp.swift
-//  IOSLayoutsDemo
+//  SeaBearKitDemo
 //
 //  Demo application showcasing the PersistentBackgroundNavigation pattern.
 //
 
 import SwiftUI
-import IOSLayouts
+import SeaBearKit
 
 @main
 struct DemoApp: App {

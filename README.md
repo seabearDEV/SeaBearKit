@@ -1,4 +1,4 @@
-# IOSLayouts
+# SeaBearKit
 
 [![Swift Version](https://img.shields.io/badge/Swift-6.0-orange.svg)](https://swift.org)
 [![Platforms](https://img.shields.io/badge/Platforms-iOS%2017+%20|%20macOS%2014+-blue.svg)](https://developer.apple.com)
@@ -31,7 +31,7 @@ This pattern was developed through extensive iteration to address SwiftUI's navi
 
 ```swift
 import SwiftUI
-import IOSLayouts
+import SeaBearKit
 
 @main
 struct MyApp: App {
@@ -88,7 +88,7 @@ Or in Xcode: File → Add Package Dependencies → Enter repository URL
 
 ## Navigation Approaches
 
-IOSLayouts provides flexibility to match your coding style:
+SeaBearKit provides flexibility to match your coding style:
 
 ### Automatic (Recommended for most cases)
 

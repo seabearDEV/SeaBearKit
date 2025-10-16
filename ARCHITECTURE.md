@@ -1,10 +1,10 @@
-# IOSLayouts Architecture
+# SeaBearKit Architecture
 
-Technical documentation for the IOSLayouts library architecture and design decisions.
+Technical documentation for the SeaBearKit library architecture and design decisions.
 
 ## Overview
 
-IOSLayouts is a Swift Package that provides production-ready SwiftUI layout patterns. The core focus is the **Persistent Background Navigation** pattern, which solves a common SwiftUI challenge: maintaining a consistent background across navigation transitions.
+SeaBearKit is a Swift Package that provides production-ready SwiftUI layout patterns. The core focus is the **Persistent Background Navigation** pattern, which solves a common SwiftUI challenge: maintaining a consistent background across navigation transitions.
 
 ## The Problem
 
@@ -124,8 +124,8 @@ RadialGradient overlay adds depth:
 ios-layouts/
 ├── Package.swift                              # Swift Package manifest
 ├── Sources/
-│   ├── IOSLayouts/                           # Main library
-│   │   ├── IOSLayouts.swift                  # Module documentation
+│   ├── SeaBearKit/                           # Main library
+│   │   ├── SeaBearKit.swift                  # Module documentation
 │   │   ├── Backgrounds/
 │   │   │   ├── ColorPalette.swift            # Color system
 │   │   │   ├── GradientBackground.swift      # Static gradient
@@ -137,7 +137,7 @@ ios-layouts/
 │   └── Demo/
 │       └── DemoApp.swift                     # Example app
 ├── Tests/
-│   └── IOSLayoutsTests/                      # Unit tests
+│   └── SeaBearKitTests/                      # Unit tests
 ├── README.md                                  # Project overview
 ├── USAGE.md                                   # User guide
 └── ARCHITECTURE.md                            # This file

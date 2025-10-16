@@ -1,6 +1,6 @@
 # Quick Start Guide
 
-IOSLayouts integration guide.
+SeaBearKit integration guide.
 
 ## Installation
 
@@ -16,7 +16,7 @@ Replace your app's entry point with this:
 
 ```swift
 import SwiftUI
-import IOSLayouts
+import SeaBearKit
 
 @main
 struct MyApp: App {
@@ -34,14 +34,14 @@ This provides a persistent gradient background across navigation transitions.
 
 ## Navigation
 
-IOSLayouts offers two ways to handle navigation - choose what fits your style:
+SeaBearKit offers two ways to handle navigation - choose what fits your style:
 
 ### Automatic (Recommended)
 
 Use `PersistentNavigationLink` for zero-friction navigation:
 
 ```swift
-import IOSLayouts
+import SeaBearKit
 
 struct ContentView: View {
     var body: some View {

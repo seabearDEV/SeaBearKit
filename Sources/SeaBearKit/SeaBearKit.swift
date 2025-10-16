@@ -1,14 +1,14 @@
 //
-//  IOSLayouts.swift
-//  IOSLayouts
+//  SeaBearKit.swift
+//  SeaBearKit
 //
-//  Main module file for IOSLayouts library.
+//  Main module file for SeaBearKit library.
 //  A collection of production-ready SwiftUI layouts and reusable UI components.
 //
 
 import SwiftUI
 
-/// IOSLayouts - Production-ready SwiftUI layouts and components
+/// SeaBearKit - Production-ready SwiftUI layouts and components
 ///
 /// This library provides battle-tested layout patterns extracted from real-world iOS applications.
 ///
@@ -38,7 +38,7 @@ import SwiftUI
 /// ## Quick Start
 ///
 /// ```swift
-/// import IOSLayouts
+/// import SeaBearKit
 ///
 /// @main
 /// struct MyApp: App {
@@ -63,12 +63,12 @@ import SwiftUI
 /// }
 /// ```
 ///
-public struct IOSLayouts {
+public struct SeaBearKit {
     /// Library version
     public static let version = "1.1.0"
 
     /// Library name
-    public static let name = "IOSLayouts"
+    public static let name = "SeaBearKit"
 
     /// Minimum iOS version supported
     public static let minimumIOSVersion = "17.0"

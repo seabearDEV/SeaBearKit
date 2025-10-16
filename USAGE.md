@@ -1,4 +1,4 @@
-# IOSLayouts Usage Guide
+# SeaBearKit Usage Guide
 
 Production-ready SwiftUI layout patterns for iOS development. This guide documents the **PersistentBackgroundNavigation** system, which maintains consistent backgrounds across navigation transitions.
 
@@ -6,7 +6,7 @@ Production-ready SwiftUI layout patterns for iOS development. This guide documen
 
 ### Swift Package Manager
 
-Add IOSLayouts to your project:
+Add SeaBearKit to your project:
 
 ```swift
 dependencies: [
@@ -17,7 +17,7 @@ dependencies: [
 Then import it in your Swift files:
 
 ```swift
-import IOSLayouts
+import SeaBearKit
 ```
 
 ## Quick Start
@@ -26,7 +26,7 @@ Wrap your root view in `PersistentBackgroundNavigation`:
 
 ```swift
 import SwiftUI
-import IOSLayouts
+import SeaBearKit
 
 @main
 struct MyApp: App {
@@ -68,7 +68,7 @@ PersistentBackgroundNavigation.minimal(palette: .forest) {
 
 ### Color Palettes
 
-IOSLayouts includes nine built-in palettes:
+SeaBearKit includes nine built-in palettes:
 
 ```swift
 ColorPalette.sunset         // Warm tones: coral, orange, yellow, pink, purple
@@ -116,7 +116,7 @@ BackgroundConfiguration(showGradient: true)
 
 ## Navigation Patterns
 
-IOSLayouts provides flexible navigation options to match your coding style and project needs.
+SeaBearKit provides flexible navigation options to match your coding style and project needs.
 
 ### Automatic Navigation (Recommended)
 

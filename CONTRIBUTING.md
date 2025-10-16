@@ -1,6 +1,6 @@
-# Contributing to IOSLayouts
+# Contributing to SeaBearKit
 
-Thank you for your interest in contributing to IOSLayouts! This guide will help you get started.
+Thank you for your interest in contributing to SeaBearKit! This guide will help you get started.
 
 ## Code of Conduct
 
@@ -53,7 +53,7 @@ swift test
 swift test --verbose
 
 # Run specific test
-swift test --filter IOSLayoutsTests.testLibraryMetadata
+swift test --filter SeaBearKitTests.testLibraryMetadata
 ```
 
 **All tests must pass before submitting a PR.**
@@ -75,7 +75,7 @@ Or in Xcode: **File → Add Package Dependencies → Add Local**
 
 Use Xcode Previews for quick iteration:
 
-1. Open `Sources/IOSLayouts/Navigation/PersistentBackgroundNavigation.swift`
+1. Open `Sources/SeaBearKit/Navigation/PersistentBackgroundNavigation.swift`
 2. Press `⌥⌘↩` to open Canvas
 3. Test your changes interactively
 
@@ -286,4 +286,4 @@ Contributors will be recognized in:
 - CHANGELOG.md for significant contributions
 - GitHub contributors page
 
-Thank you for contributing to IOSLayouts! 🎉
+Thank you for contributing to SeaBearKit! 🎉

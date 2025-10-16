@@ -1,20 +1,20 @@
 //
-//  IOSLayoutsTests.swift
-//  IOSLayoutsTests
+//  SeaBearKitTests.swift
+//  SeaBearKitTests
 //
-//  Unit tests for IOSLayouts library
+//  Unit tests for SeaBearKit library
 //
 
 import XCTest
-@testable import IOSLayouts
+@testable import SeaBearKit
 
-final class IOSLayoutsTests: XCTestCase {
+final class SeaBearKitTests: XCTestCase {
 
     func testLibraryMetadata() {
-        XCTAssertEqual(IOSLayouts.name, "IOSLayouts")
-        XCTAssertEqual(IOSLayouts.version, "1.1.0")
-        XCTAssertEqual(IOSLayouts.minimumIOSVersion, "17.0")
-        XCTAssertEqual(IOSLayouts.recommendedIOSVersion, "18.0")
+        XCTAssertEqual(SeaBearKit.name, "SeaBearKit")
+        XCTAssertEqual(SeaBearKit.version, "1.1.0")
+        XCTAssertEqual(SeaBearKit.minimumIOSVersion, "17.0")
+        XCTAssertEqual(SeaBearKit.recommendedIOSVersion, "18.0")
     }
 
     func testColorPaletteCreation() {

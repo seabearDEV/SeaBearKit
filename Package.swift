@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "IOSLayouts",
+    name: "SeaBearKit",
     platforms: [
         .iOS(.v17), // iOS 17+ with best experience on iOS 18+
         .macOS(.v14)
@@ -12,21 +12,21 @@ let package = Package(
     products: [
         // Library product for the reusable layouts
         .library(
-            name: "IOSLayouts",
-            targets: ["IOSLayouts"]
+            name: "SeaBearKit",
+            targets: ["SeaBearKit"]
         ),
     ],
     targets: [
         // Main library target
         .target(
-            name: "IOSLayouts",
+            name: "SeaBearKit",
             dependencies: []
         ),
 
         // Tests target
         .testTarget(
-            name: "IOSLayoutsTests",
-            dependencies: ["IOSLayouts"]
+            name: "SeaBearKitTests",
+            dependencies: ["SeaBearKit"]
         ),
     ]
 )
