@@ -5,6 +5,44 @@ All notable changes to SeaBearKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2026-02-03
+
+### Added
+- **Comprehensive Color Utilities**: Enhanced color manipulation for dynamic theming
+  - `Color.luminance` - Perceptual brightness using ITU-R BT.709 standard
+  - `Color.isDark` - Threshold-based check for dark colors
+  - `Color.contrastingColor(threshold:)` - Returns black or white for text on colored backgrounds
+  - `Color.adjustedBrightness(_:)` - Lighten or darken colors by amount
+  - `Color.blend(from:to:progress:)` - Static method for linear color interpolation
+  - `Color.toHex()` / `Color(hex:)` - Hex string conversion (supports RGB, RRGGBB, AARRGGBB formats)
+  - `ResolvedRGBA` - Pre-resolved color components for efficient repeated blending
+- **Haptic Feedback Helper** (iOS only): Low-latency haptic feedback system
+  - `HapticHelper.impact(_:intensity:)` - Impact feedback with all styles
+  - `HapticHelper.notification(_:)` - Success, warning, error feedback
+  - `HapticHelper.selection()` - Selection change feedback
+  - `HapticHelper.prepare(_:)` - Pre-warm haptic engine for lower latency
+  - Pre-instantiated generators avoid allocation delays during interactions
+- **Shake Gesture Detection** (iOS only): Simple shake handling
+  - `.onShake(perform:)` - View modifier for shake gesture response
+  - Useful for undo, debug menus, Easter eggs
+- **Time Formatting Extensions**: Simple duration formatting
+  - `Int.formattedAsTime` - Formats seconds as MM:SS (e.g., 125 → "2:05")
+  - `Double.formattedAsTime` - Same for TimeInterval
+- **Adaptive Inner Border**: Luminance-aware highlight effect
+  - `.adaptiveInnerBorder(color:cornerRadius:)` - Light edge on dark colors, dark edge on light colors
+- **New Test Coverage**: 10 new tests for color utilities and time formatting
+
+### Changed
+- Refactored `Color.isLight` to use the new `luminance` property
+- Refactored `Color.blend(with:ratio:)` to use `ResolvedRGBA` for consistency
+- Updated library documentation with new API examples
+
+### Technical
+- New `Utilities/` folder for non-view helpers
+- All new APIs are `public` for external use
+- macOS support maintained for color utilities (haptics are iOS-only)
+- `ResolvedRGBA` is `Sendable` for safe concurrent use
+
 ## [1.3.0] - 2025-11-16
 
 ### Added
@@ -143,6 +181,7 @@ PersistentNavigationLink("Details") {
 }
 ```
 
+[1.4.0]: https://github.com/seabearDEV/SeaBearKit/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/seabearDEV/SeaBearKit/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/seabearDEV/SeaBearKit/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/seabearDEV/SeaBearKit/compare/v1.0.0...v1.1.0

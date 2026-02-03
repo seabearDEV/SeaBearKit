@@ -19,20 +19,35 @@ This pattern was developed through extensive iteration to address SwiftUI's navi
 - **Automatic Navigation**: Background persistence without manual modifiers
 - **Persistent Background System**: NavigationStack wrapper that maintains backgrounds during transitions
 - **Flexible API**: Choose automatic convenience wrappers or manual control
-- **Gradient Backgrounds**: Configurable gradients with vignette effects (iOS 18+ Liquid Glass compatible)
 - **Custom Backgrounds**: Use any SwiftUI view as a persistent background (images, videos, animations)
-- **Color Palettes**: Extensible palette system with nine built-in themes
 
-### View Modifiers (New in 1.3.0)
+### Visuals
+- **Gradient Backgrounds**: Configurable gradients with vignette effects (iOS 18+ Liquid Glass compatible)
+- **Color Palettes**: Extensible palette system with nine built-in themes
+- **Appearance Adaptive**: Automatic light/dark mode support
+- **Material Integration**: Compatible with iOS 18+ material system
+
+### View Modifiers
 - **Conditional Modifiers**: Clean `.if()` syntax for conditional view transformations
 - **Glass Shadows**: Unified `.glassShadow()` system for Liquid Glass UI with press states
 - **Adaptive Corner Radius**: Proportional corner radius that scales across device sizes
+- **Adaptive Inner Border**: Luminance-aware highlight borders for colored buttons
 
-### General
-- **Performance Optimized**: Static gradients with minimal battery impact
-- **Appearance Adaptive**: Automatic light/dark mode support
-- **Material Integration**: Compatible with iOS 18+ material system
+### Color Utilities
+- **Luminance Analysis**: ITU-R BT.709 perceptual brightness calculations
+- **Contrast Detection**: Automatic text color selection for backgrounds
+- **Color Blending**: Linear interpolation with efficient pre-resolved components
+- **Hex Conversion**: Full support for RGB, RRGGBB, and AARRGGBB formats
+
+### Utilities
+- **Haptic Feedback**: Low-latency haptics with pre-instantiated generators (iOS)
+- **Shake Detection**: Simple `.onShake()` modifier (iOS)
+- **Time Formatting**: Duration formatting as MM:SS
+
+### Performance
 - **Pure SwiftUI**: No external dependencies
+- **Battery Optimized**: Static gradients with minimal impact
+- **Pre-instantiated Haptics**: Avoid allocation delays during interactions
 
 ## Quick Start
 
@@ -226,9 +241,6 @@ Text("Hello")
     .if(isHighlighted) { view in
         view.foregroundStyle(.red)
     }
-    .if(colorScheme == .dark) { view in
-        view.background(.black)
-    }
 
 // With both branches
 Text("Status")
@@ -249,17 +261,10 @@ Button("Action") { }
     .glassShadow()
 
 // With press state
-struct GlassButton: View {
-    @State private var isPressed = false
-
-    var body: some View {
-        Text("Press Me")
-            .padding()
-            .background(.regularMaterial)
-            .glassShadow(isPressed: isPressed, intensity: .regular)
-            .scaleEffect(isPressed ? 0.97 : 1.0)
-    }
-}
+Text("Press Me")
+    .padding()
+    .background(.regularMaterial)
+    .glassShadow(isPressed: isPressed, intensity: .regular)
 
 // Different intensities
 view.glassShadow(intensity: .subtle)     // Subtle elevation
@@ -279,18 +284,95 @@ RoundedRectangle(cornerRadius: 0)
     .adaptiveCornerRadius(40, size: CGSize(width: 100, height: 100))
 
 // Using predefined styles
-RoundedRectangle(cornerRadius: 0)
-    .adaptiveCornerRadius(CornerRadiusStyle.round, size: size)
-
-// Available styles
 CornerRadiusStyle.square    // 0%   - Perfect squares
 CornerRadiusStyle.slight    // 15%  - Subtle corners
 CornerRadiusStyle.moderate  // 40%  - Balanced
 CornerRadiusStyle.round     // 65%  - Prominent curves
 CornerRadiusStyle.circle    // 100% - Perfect circles
+```
 
-// Calculate radius independently
-let radius = View.calculateCornerRadius(percent: 50, size: size)
+### Adaptive Inner Border
+
+Luminance-aware highlight border that creates depth on colored buttons:
+
+```swift
+RoundedRectangle(cornerRadius: 12)
+    .fill(buttonColor)
+    .adaptiveInnerBorder(color: buttonColor, cornerRadius: 12)
+```
+
+Light colors get a subtle dark top edge, dark colors get a subtle light top edge.
+
+## Color Utilities
+
+Comprehensive color manipulation for dynamic theming:
+
+```swift
+// Luminance and contrast
+let textColor = backgroundColor.contrastingColor()  // Returns .black or .white
+let isReadable = backgroundColor.isLight  // true if luminance > 0.6
+
+// Color blending
+let blended = Color.blend(from: .red, to: .blue, progress: 0.5)
+let lighter = myColor.adjustedBrightness(0.2)
+let darker = myColor.adjustedBrightness(-0.2)
+
+// Hex conversion
+let hex = myColor.toHex()           // "#ff5500"
+let color = Color(hex: "#ff5500")   // Supports RGB, RRGGBB, AARRGGBB
+
+// Efficient repeated blending (resolve once, blend many)
+let resolved = startColor.resolvedRGBA
+for progress in stride(from: 0, to: 1, by: 0.1) {
+    let color = resolved.blend(to: endColor.resolvedRGBA, progress: progress)
+}
+```
+
+## Haptic Feedback (iOS)
+
+Low-latency haptic feedback with pre-instantiated generators:
+
+```swift
+// Impact feedback
+HapticHelper.impact(.light)
+HapticHelper.impact(.medium)
+HapticHelper.impact(.rigid)
+HapticHelper.impact(.heavy, intensity: 0.5)
+
+// Notification feedback
+HapticHelper.notification(.success)
+HapticHelper.notification(.warning)
+HapticHelper.notification(.error)
+
+// Selection feedback (for pickers, segments)
+HapticHelper.selection()
+
+// Pre-warm for lower latency (optional)
+HapticHelper.prepare(.medium)
+```
+
+## Shake Detection (iOS)
+
+Simple shake gesture handling:
+
+```swift
+ContentView()
+    .onShake {
+        undoLastAction()
+    }
+```
+
+## Time Formatting
+
+Simple duration formatting:
+
+```swift
+45.formattedAsTime      // "0:45"
+125.formattedAsTime     // "2:05"
+3661.formattedAsTime    // "61:01"
+
+let duration: TimeInterval = 125.7
+duration.formattedAsTime  // "2:05"
 ```
 
 ## Documentation

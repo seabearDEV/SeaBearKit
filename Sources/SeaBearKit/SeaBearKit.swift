@@ -10,7 +10,7 @@ import SwiftUI
 
 /// SeaBearKit - SwiftUI layouts and components
 ///
-/// This library provides layout patterns for iOS applications.
+/// This library provides layout patterns and utilities for iOS applications.
 ///
 /// ## Core Components
 ///
@@ -39,6 +39,24 @@ import SwiftUI
 /// - `ColorPalette` - Flexible color palette with gradient configuration
 /// - Sample palettes: `.sunset`, `.ocean`, `.forest`, `.monochrome`
 ///
+/// ### Color Utilities
+/// - `Color.luminance` - Perceptual brightness (ITU-R BT.709)
+/// - `Color.isLight` / `Color.isDark` - Threshold-based checks
+/// - `Color.contrastingColor()` - Returns black or white for text
+/// - `Color.adjustedBrightness(_:)` - Lighten or darken colors
+/// - `Color.blend(from:to:progress:)` - Linear color interpolation
+/// - `Color.toHex()` / `Color(hex:)` - Hex string conversion
+/// - `ResolvedRGBA` - Pre-resolved components for efficient blending
+///
+/// ### View Modifiers
+/// - `.if(_:transform:)` - Conditional modifier application
+/// - `.adaptiveInnerBorder(color:cornerRadius:)` - Luminance-aware highlight border
+/// - `.onShake(perform:)` - Shake gesture detection (iOS only)
+///
+/// ### Utilities
+/// - `HapticHelper` - Low-latency haptic feedback (iOS only)
+/// - `Int.formattedAsTime` / `Double.formattedAsTime` - MM:SS formatting
+///
 /// ### Configuration
 /// - `BackgroundConfiguration` - Preset configurations: `.standard`, `.minimal`
 ///
@@ -63,16 +81,18 @@ import SwiftUI
 ///     DetailView()  // Background persists automatically!
 /// }
 ///
-/// // Or Manual (Advanced)
-/// NavigationLink("Details") {
-///     DetailView()
-///         .clearNavigationBackground()
-/// }
+/// // Color utilities
+/// let textColor = backgroundColor.contrastingColor()
+/// let blended = Color.blend(from: .red, to: .blue, progress: 0.5)
+///
+/// // Haptic feedback
+/// HapticHelper.impact(.medium)
+/// HapticHelper.notification(.success)
 /// ```
 ///
 public struct SeaBearKit {
     /// Library version
-    public static let version = "1.3.0"
+    public static let version = "1.4.0"
 
     /// Library name
     public static let name = "SeaBearKit"
