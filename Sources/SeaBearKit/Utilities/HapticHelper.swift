@@ -41,6 +41,7 @@ import UIKit
 /// }
 /// ```
 ///
+@MainActor
 public enum HapticHelper {
 
     // MARK: - Pre-instantiated Generators
