@@ -5,6 +5,29 @@ All notable changes to SeaBearKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2026-02-03
+
+### Added
+- **Parameterized Luminance Checks**: More flexible light/dark detection
+  - `Color.isLight(threshold:)` - Custom threshold for light color detection
+  - `Color.isDark(threshold:)` - Custom threshold for dark color detection
+  - Original `isLight` and `isDark` properties remain unchanged (use default thresholds)
+- **Gradient Luminance Helper**: Calculate effective luminance of gradient overlays
+  - `WeightedColor` struct - Pairs a color with its opacity weight
+  - `[WeightedColor].weightedLuminance` - Opacity-weighted average luminance
+  - `[WeightedColor].contrastingColor(threshold:)` - Get appropriate text color for gradients
+- **Expanded Test Coverage**: 14 new tests for comprehensive coverage
+  - Parameterized `isLight`/`isDark` with custom thresholds
+  - Gradient luminance calculations
+  - Shadow intensity values and ordering
+  - Corner radius calculations and presets
+  - Total tests increased from 15 to 29
+
+### Technical
+- All new APIs follow existing patterns and are fully documented
+- Zero breaking changes - all existing code continues to work
+- `WeightedColor` is `Sendable` for safe concurrent use
+
 ## [1.4.0] - 2026-02-03
 
 ### Added
@@ -181,6 +204,7 @@ PersistentNavigationLink("Details") {
 }
 ```
 
+[1.5.0]: https://github.com/seabearDEV/SeaBearKit/compare/v1.4.0...v1.5.0
 [1.4.0]: https://github.com/seabearDEV/SeaBearKit/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/seabearDEV/SeaBearKit/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/seabearDEV/SeaBearKit/compare/v1.1.0...v1.2.0

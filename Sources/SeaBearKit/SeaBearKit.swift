@@ -41,7 +41,8 @@ import SwiftUI
 ///
 /// ### Color Utilities
 /// - `Color.luminance` - Perceptual brightness (ITU-R BT.709)
-/// - `Color.isLight` / `Color.isDark` - Threshold-based checks
+/// - `Color.isLight` / `Color.isDark` - Threshold-based checks (with parameterized variants)
+/// - `WeightedColor` / `[WeightedColor].weightedLuminance` - Gradient luminance calculation
 /// - `Color.contrastingColor()` - Returns black or white for text
 /// - `Color.adjustedBrightness(_:)` - Lighten or darken colors
 /// - `Color.blend(from:to:progress:)` - Linear color interpolation
@@ -92,7 +93,7 @@ import SwiftUI
 ///
 public struct SeaBearKit {
     /// Library version
-    public static let version = "1.4.0"
+    public static let version = "1.5.0"
 
     /// Library name
     public static let name = "SeaBearKit"

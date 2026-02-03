@@ -84,15 +84,29 @@ extension Color {
     }
 
     /// Determines if color is light enough for dark text/UI elements.
-    /// Threshold of 0.6 provides good contrast for accessibility.
+    /// Default threshold of 0.6 provides good contrast for accessibility.
     public var isLight: Bool {
-        luminance > 0.6
+        isLight(threshold: 0.6)
+    }
+
+    /// Determines if color is light using a custom threshold.
+    /// - Parameter threshold: Luminance threshold (default 0.6, lower = more colors considered light)
+    /// - Returns: True if luminance exceeds threshold
+    public func isLight(threshold: CGFloat = 0.6) -> Bool {
+        luminance > threshold
     }
 
     /// Determines if color is dark enough for light text/UI elements.
-    /// Threshold of 0.3 ensures sufficient contrast for readability.
+    /// Default threshold of 0.3 ensures sufficient contrast for readability.
     public var isDark: Bool {
-        luminance < 0.3
+        isDark(threshold: 0.3)
+    }
+
+    /// Determines if color is dark using a custom threshold.
+    /// - Parameter threshold: Luminance threshold (default 0.3, higher = more colors considered dark)
+    /// - Returns: True if luminance is below threshold
+    public func isDark(threshold: CGFloat = 0.3) -> Bool {
+        luminance < threshold
     }
 
     /// Returns contrasting color (black or white) for text/patterns on this background.
@@ -176,5 +190,62 @@ extension Color {
             blue: Double(blue) / 255,
             opacity: Double(alpha) / 255
         )
+    }
+}
+
+// MARK: - Gradient Luminance
+
+/// A color-opacity pair for weighted luminance calculations.
+/// Used when calculating effective luminance of gradient overlays.
+public struct WeightedColor: Sendable {
+    public let color: Color
+    public let opacity: Double
+
+    public init(color: Color, opacity: Double) {
+        self.color = color
+        self.opacity = opacity
+    }
+}
+
+extension Array where Element == WeightedColor {
+    /// Calculates the effective luminance of a gradient weighted by opacity.
+    ///
+    /// This is useful for determining if a gradient background is overall light or dark,
+    /// which helps in choosing appropriate text colors or border styles.
+    ///
+    /// ## Usage
+    ///
+    /// ```swift
+    /// let gradientColors: [WeightedColor] = [
+    ///     WeightedColor(color: .blue, opacity: 0.5),
+    ///     WeightedColor(color: .purple, opacity: 0.6),
+    ///     WeightedColor(color: .pink, opacity: 0.7)
+    /// ]
+    ///
+    /// let effectiveLuminance = gradientColors.weightedLuminance
+    /// let textColor: Color = effectiveLuminance > 0.5 ? .black : .white
+    /// ```
+    ///
+    /// - Returns: Weighted average luminance (0.0-1.0), or 0.5 if array is empty
+    public var weightedLuminance: Double {
+        guard !isEmpty else { return 0.5 }
+
+        var totalWeighted = 0.0
+        var totalOpacity = 0.0
+
+        for weighted in self {
+            let lum = weighted.color.luminance
+            totalWeighted += lum * weighted.opacity
+            totalOpacity += weighted.opacity
+        }
+
+        return totalOpacity > 0 ? totalWeighted / totalOpacity : 0.5
+    }
+
+    /// Returns a contrasting color (black or white) suitable for text on this gradient.
+    /// - Parameter threshold: Luminance threshold (default 0.5)
+    /// - Returns: Black for light gradients, white for dark gradients
+    public func contrastingColor(threshold: Double = 0.5) -> Color {
+        weightedLuminance > threshold ? .black : .white
     }
 }

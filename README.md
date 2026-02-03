@@ -36,6 +36,8 @@ This pattern was developed through extensive iteration to address SwiftUI's navi
 ### Color Utilities
 - **Luminance Analysis**: ITU-R BT.709 perceptual brightness calculations
 - **Contrast Detection**: Automatic text color selection for backgrounds
+- **Parameterized Thresholds**: Custom thresholds for `isLight`/`isDark` checks
+- **Gradient Luminance**: Weighted luminance calculation for multi-color backgrounds
 - **Color Blending**: Linear interpolation with efficient pre-resolved components
 - **Hex Conversion**: Full support for RGB, RRGGBB, and AARRGGBB formats
 
@@ -312,6 +314,10 @@ Comprehensive color manipulation for dynamic theming:
 let textColor = backgroundColor.contrastingColor()  // Returns .black or .white
 let isReadable = backgroundColor.isLight  // true if luminance > 0.6
 
+// Custom thresholds for light/dark detection
+let isVeryLight = myColor.isLight(threshold: 0.7)  // Stricter threshold
+let isVeryDark = myColor.isDark(threshold: 0.2)    // Stricter threshold
+
 // Color blending
 let blended = Color.blend(from: .red, to: .blue, progress: 0.5)
 let lighter = myColor.adjustedBrightness(0.2)
@@ -326,6 +332,14 @@ let resolved = startColor.resolvedRGBA
 for progress in stride(from: 0, to: 1, by: 0.1) {
     let color = resolved.blend(to: endColor.resolvedRGBA, progress: progress)
 }
+
+// Gradient luminance (for multi-color backgrounds)
+let gradientColors: [WeightedColor] = [
+    WeightedColor(color: .blue, opacity: 0.5),
+    WeightedColor(color: .purple, opacity: 0.7)
+]
+let effectiveLuminance = gradientColors.weightedLuminance
+let textColor = gradientColors.contrastingColor()  // Black or white for the gradient
 ```
 
 ## Haptic Feedback (iOS)

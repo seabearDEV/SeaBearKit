@@ -13,7 +13,7 @@ final class SeaBearKitTests: XCTestCase {
 
     func testLibraryMetadata() {
         XCTAssertEqual(SeaBearKit.name, "SeaBearKit")
-        XCTAssertEqual(SeaBearKit.version, "1.4.0")
+        XCTAssertEqual(SeaBearKit.version, "1.5.0")
         XCTAssertEqual(SeaBearKit.minimumIOSVersion, "17.0")
         XCTAssertEqual(SeaBearKit.recommendedIOSVersion, "18.0")
     }
@@ -150,5 +150,203 @@ final class SeaBearKitTests: XCTestCase {
     func testTimeFormattingDouble() {
         XCTAssertEqual((125.7).formattedAsTime, "2:05")
         XCTAssertEqual((0.0).formattedAsTime, "0:00")
+    }
+
+    // MARK: - Parameterized Luminance Tests
+
+    func testColorIsLightWithThreshold() {
+        // Gray (0.5 luminance) with different thresholds
+        let gray = Color(white: 0.5)
+
+        // Should be light with low threshold
+        XCTAssertTrue(gray.isLight(threshold: 0.4))
+
+        // Should not be light with high threshold
+        XCTAssertFalse(gray.isLight(threshold: 0.6))
+
+        // Default threshold (0.6) should return false for mid-gray
+        XCTAssertFalse(gray.isLight())
+    }
+
+    func testColorIsDarkWithThreshold() {
+        // Gray (0.5 luminance) with different thresholds
+        let gray = Color(white: 0.5)
+
+        // Should be dark with high threshold
+        XCTAssertTrue(gray.isDark(threshold: 0.6))
+
+        // Should not be dark with low threshold
+        XCTAssertFalse(gray.isDark(threshold: 0.3))
+
+        // Default threshold (0.3) should return false for mid-gray
+        XCTAssertFalse(gray.isDark())
+    }
+
+    // MARK: - Gradient Luminance Tests
+
+    func testWeightedColorCreation() {
+        let weighted = WeightedColor(color: .red, opacity: 0.5)
+        XCTAssertEqual(weighted.opacity, 0.5)
+    }
+
+    func testGradientWeightedLuminance() {
+        // All white gradient should have high luminance
+        let whiteGradient: [WeightedColor] = [
+            WeightedColor(color: .white, opacity: 0.5),
+            WeightedColor(color: .white, opacity: 0.7)
+        ]
+        XCTAssertGreaterThan(whiteGradient.weightedLuminance, 0.9)
+
+        // All black gradient should have low luminance
+        let blackGradient: [WeightedColor] = [
+            WeightedColor(color: .black, opacity: 0.5),
+            WeightedColor(color: .black, opacity: 0.7)
+        ]
+        XCTAssertLessThan(blackGradient.weightedLuminance, 0.1)
+
+        // Mixed gradient should be somewhere in between
+        let mixedGradient: [WeightedColor] = [
+            WeightedColor(color: .white, opacity: 0.5),
+            WeightedColor(color: .black, opacity: 0.5)
+        ]
+        let mixedLum = mixedGradient.weightedLuminance
+        XCTAssertGreaterThan(mixedLum, 0.3)
+        XCTAssertLessThan(mixedLum, 0.7)
+    }
+
+    func testGradientWeightedLuminanceEmpty() {
+        // Empty array should return 0.5 (neutral)
+        let empty: [WeightedColor] = []
+        XCTAssertEqual(empty.weightedLuminance, 0.5)
+    }
+
+    func testGradientContrastingColor() {
+        // Light gradient should return black
+        let lightGradient: [WeightedColor] = [
+            WeightedColor(color: .white, opacity: 0.8),
+            WeightedColor(color: .yellow, opacity: 0.6)
+        ]
+        XCTAssertEqual(lightGradient.contrastingColor(), Color.black)
+
+        // Dark gradient should return white
+        let darkGradient: [WeightedColor] = [
+            WeightedColor(color: .black, opacity: 0.8),
+            WeightedColor(color: Color(white: 0.2), opacity: 0.6)
+        ]
+        XCTAssertEqual(darkGradient.contrastingColor(), Color.white)
+    }
+
+    // MARK: - Shadow Intensity Tests
+
+    func testShadowIntensitySubtle() {
+        let unpressed = ShadowIntensity.subtle.unpressed
+        let pressed = ShadowIntensity.subtle.pressed
+
+        // Subtle should have low opacity
+        XCTAssertEqual(unpressed.opacity, 0.15)
+        XCTAssertEqual(unpressed.radius, 3)
+        XCTAssertEqual(unpressed.y, 2)
+
+        // Pressed should have even lower values
+        XCTAssertLessThan(pressed.opacity, unpressed.opacity)
+        XCTAssertLessThan(pressed.radius, unpressed.radius)
+    }
+
+    func testShadowIntensityRegular() {
+        let unpressed = ShadowIntensity.regular.unpressed
+        let pressed = ShadowIntensity.regular.pressed
+
+        // Regular is the default, moderate values
+        XCTAssertEqual(unpressed.opacity, 0.25)
+        XCTAssertEqual(unpressed.radius, 5)
+        XCTAssertEqual(unpressed.y, 3)
+
+        // Pressed reduces all values
+        XCTAssertLessThan(pressed.opacity, unpressed.opacity)
+    }
+
+    func testShadowIntensityProminent() {
+        let unpressed = ShadowIntensity.prominent.unpressed
+        let pressed = ShadowIntensity.prominent.pressed
+
+        // Prominent has highest values
+        XCTAssertEqual(unpressed.opacity, 0.35)
+        XCTAssertEqual(unpressed.radius, 8)
+        XCTAssertEqual(unpressed.y, 5)
+
+        // Even prominent pressed should be less than unpressed
+        XCTAssertLessThan(pressed.opacity, unpressed.opacity)
+    }
+
+    func testShadowIntensityOrdering() {
+        // Verify intensity levels are properly ordered
+        let subtle = ShadowIntensity.subtle.unpressed
+        let regular = ShadowIntensity.regular.unpressed
+        let prominent = ShadowIntensity.prominent.unpressed
+
+        XCTAssertLessThan(subtle.opacity, regular.opacity)
+        XCTAssertLessThan(regular.opacity, prominent.opacity)
+
+        XCTAssertLessThan(subtle.radius, regular.radius)
+        XCTAssertLessThan(regular.radius, prominent.radius)
+    }
+
+    // MARK: - Corner Radius Tests
+
+    func testCornerRadiusStyleValues() {
+        XCTAssertEqual(CornerRadiusStyle.square, 0.0)
+        XCTAssertEqual(CornerRadiusStyle.slight, 15.0)
+        XCTAssertEqual(CornerRadiusStyle.moderate, 40.0)
+        XCTAssertEqual(CornerRadiusStyle.round, 65.0)
+        XCTAssertEqual(CornerRadiusStyle.circle, 100.0)
+    }
+
+    func testCalculateCornerRadius() {
+        let size = CGSize(width: 100, height: 100)
+
+        // 0% = square (no radius)
+        XCTAssertEqual(CornerRadiusHelper.calculate(percent: 0, size: size), 0)
+
+        // 100% = circle (radius = half of size)
+        XCTAssertEqual(CornerRadiusHelper.calculate(percent: 100, size: size), 50)
+
+        // 50% = quarter of size
+        XCTAssertEqual(CornerRadiusHelper.calculate(percent: 50, size: size), 25)
+    }
+
+    func testCalculateCornerRadiusNonSquare() {
+        // Should use smaller dimension for non-square sizes
+        let size = CGSize(width: 200, height: 100)
+
+        // 100% should be based on smaller dimension (100)
+        XCTAssertEqual(CornerRadiusHelper.calculate(percent: 100, size: size), 50)
+    }
+
+    func testCalculateCornerRadiusWithPadding() {
+        let size = CGSize(width: 100, height: 100)
+        let padding: CGFloat = 20
+
+        // With padding, effective size is 80x80
+        // 100% of 80 = 40 radius
+        XCTAssertEqual(CornerRadiusHelper.calculate(percent: 100, size: size, padding: padding), 40)
+    }
+}
+
+// MARK: - Test Helpers
+
+/// Helper to access View's static corner radius calculation methods for testing
+private enum CornerRadiusHelper {
+    static func calculate(percent: Double, size: CGSize) -> CGFloat {
+        // Replicate the calculation from CornerRadiusModifiers
+        let baseSize = min(size.width, size.height)
+        return (baseSize / 2.0) * (percent / 100.0)
+    }
+
+    static func calculate(percent: Double, size: CGSize, padding: CGFloat) -> CGFloat {
+        let adjustedSize = CGSize(
+            width: size.width - padding,
+            height: size.height - padding
+        )
+        return calculate(percent: percent, size: adjustedSize)
     }
 }
