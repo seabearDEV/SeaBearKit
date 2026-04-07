@@ -1,0 +1,47 @@
+{
+  "_meta": {
+    "context.initialized": 1775529148369,
+    "conventions.persistence": 1775529148369,
+    "files.tests": 1775529148368
+  },
+  "aliases": {},
+  "confirm": {},
+  "entries": {
+    "project": {
+      "name": "SeaBearKit — Swift Package providing SwiftUI layout patterns, centered on persistent-background navigation.",
+      "stack": "Swift 6.0, SwiftUI, SwiftPM. Platforms: iOS 17+ (optimal on iOS 18+), macOS 14+. Strict concurrency."
+    },
+    "commands": {
+      "build": "swift build",
+      "test": "swift test"
+    },
+    "arch": {
+      "core_pattern": "ZStack with two layers: (1) PersistentBackground lives outside NavigationStack lifecycle, (2) NavigationStack made transparent via `.containerBackground(for: .navigation) { Color.clear }` (iOS 18+). Background never recreates across transitions.",
+      "generic_background": "PersistentBackgroundNavigation<Background: View, Content: View> accepts any SwiftUI view as background (v1.2.0+). Palette-based init is a constrained extension where Background == PersistentBackground — preserves old API as convenience without breaking changes.",
+      "ios17_fallback": "iOS 17 lacks `.containerBackground(for: .navigation)`. Fallback chain: `.toolbarBackground(.hidden, for: .navigationBar)` + `.toolbarBackground(.hidden, for: .bottomBar)` + `.scrollContentBackground(.hidden)`. Works in ~90% of cases; custom toolbar backgrounds may conflict and complex transitions may flicker.",
+      "two_navigation_apis": "Two ways to navigate while preserving background: (1) PersistentNavigationLink — automatic, applies clearing to destinations, recommended; (2) standard NavigationLink + manual `.clearNavigationBackground()` on every destination. Mix-and-match supported.",
+      "color_palette": "ColorPalette stores `colors: [Color]` plus `gradientIndices: [Int]` and `gradientOpacities: [Double]` — gradients reference palette colors by index rather than duplicating them. Sendable/Hashable/Identifiable for SwiftUI + Swift 6 concurrency.",
+      "static_gradients": "Backgrounds use static LinearGradient + RadialGradient vignette — no animations. Deliberate: <1% battery/CPU, instant render. Don't add animated gradients without weighing battery cost."
+    },
+    "context": {
+      "initialized": "complete",
+      "failed_approaches": "Approaches tried and rejected before the ZStack pattern: (1) LinearGradient overlays — broke navigation rendering; (2) direct background modifiers — inconsistent during palette changes; (3) multi-layer gradients — perf and visibility issues. Don't relitigate without reading ARCHITECTURE.md.",
+      "manual_modifier_gotcha": "With the manual approach, every destination view (including deeply nested ones) MUST call `.clearNavigationBackground()`. Forgetting it on any one screen makes the background disappear on that screen. PersistentNavigationLink avoids this trap.",
+      "list_form_ios17": "On iOS 17, List/Form often render opaque even with the fallback applied — explicitly add `.scrollContentBackground(.hidden)` to the List/Form itself, not just the destination view.",
+      "swift6_concurrency": "Package builds under Swift 6 strict concurrency. All public types must be Sendable where applicable; view types are @MainActor. New types crossing actor boundaries (e.g., palettes) need Sendable conformance."
+    },
+    "files": {
+      "tests": "Tests/SeaBearKitTests/ — unit tests for color utils, palette validation, component init.",
+      "entry": "Sources/SeaBearKit/SeaBearKit.swift — module umbrella / docs.",
+      "navigation_main": "Sources/SeaBearKit/Navigation/PersistentBackgroundNavigation.swift — generic ZStack wrapper; the centerpiece of the library.",
+      "navigation_auto": "Sources/SeaBearKit/Navigation/AutomaticPersistentNavigation.swift — PersistentNavigationLink + `.persistentNavigationDestination(for:)` automatic-clearing API.",
+      "backgrounds": "Sources/SeaBearKit/Backgrounds/ — ColorPalette.swift (palette+indices), GradientBackground.swift (static gradient+vignette), PersistentBackground.swift (configurable, .standard/.minimal presets).",
+      "extensions": "Sources/SeaBearKit/Extensions/ — ColorExtensions.swift (brightness/blending utils), ViewExtensions.swift (includes `.clearNavigationBackground()` modifier).",
+      "modifiers": "Sources/SeaBearKit/Modifiers/ — view modifiers package added in v1.3.0 (see CHANGELOG)."
+    },
+    "conventions": {
+      "persistence": ".codexcli.json = project knowledge (any agent). CLAUDE.md = Claude behavioral directives. MEMORY.md = personal user preferences. Rule: if another agent would benefit, it belongs in .codexcli.json.",
+      "docs_in_repo": "Project carries unusually many top-level .md files (README, USAGE, QUICKSTART, ARCHITECTURE, IMPORTANT, LIQUID_GLASS, DEMO, CONTRIBUTING, CHANGELOG). Update the relevant ones when changing public API — they're treated as first-class docs, not stale notes."
+    }
+  }
+}
