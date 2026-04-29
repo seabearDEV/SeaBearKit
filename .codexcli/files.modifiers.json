@@ -1,0 +1,7 @@
+{
+  "value": "Sources/SeaBearKit/Modifiers/ — Three files: ConditionalModifiers.swift (`.if(condition:transform:)` and two-branch variant), ShadowModifiers.swift (`ShadowIntensity` enum subtle/regular/prominent, `.glassShadow(isPressed:intensity:)`, custom-param overload — pressed values are coordinated reductions of unpressed), CornerRadiusModifiers.swift (`CornerRadiusStyle` square/slight(15)/moderate(40)/round(65)/circle(100) percentages, `.adaptiveCornerRadius(percent:size:)` clips to RoundedRectangle, two static `calculateCornerRadius` helpers — formula uses min(width,height)/2 * percent/100).",
+  "meta": {
+    "created": 1777479394668,
+    "updated": 1777479394668
+  }
+}

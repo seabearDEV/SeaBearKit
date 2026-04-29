@@ -1,0 +1,7 @@
+{
+  "value": "`Color.isLight` defaults to threshold 0.6 (not 0.5) and `Color.isDark` defaults to 0.3. They are deliberately asymmetric — the band 0.3..0.6 means a color may be neither light nor dark. `contrastingColor()` uses 0.5 by default, which is symmetric. The parameterized `isLight(threshold:)` / `isDark(threshold:)` were added in 1.5.0; the parameterless properties remain for source compatibility.",
+  "meta": {
+    "created": 1777479363628,
+    "updated": 1777479363628
+  }
+}

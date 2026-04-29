@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "codexcli": {
+      "type": "stdio",
+      "command": "ccli",
+      "args": [
+        "mcp-server",
+        "--cwd",
+        "."
+      ],
+      "env": {}
+    }
+  }
+}

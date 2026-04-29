@@ -1,0 +1,7 @@
+{
+  "value": "SeaBearKitTests.swift includes a private `CornerRadiusHelper` enum that re-implements the corner-radius math (lines ~338-352). This duplication is intentional: the production methods are static on `View`, which is hard to call directly in tests. If you change the formula in CornerRadiusModifiers.swift, update CornerRadiusHelper too — the test will pass against the duplicate, not the real code, otherwise.",
+  "meta": {
+    "created": 1777479360723,
+    "updated": 1777479360723
+  }
+}

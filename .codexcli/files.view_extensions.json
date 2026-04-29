@@ -1,0 +1,7 @@
+{
+  "value": "Sources/SeaBearKit/Extensions/ViewExtensions.swift — Three concerns mixed in one file: (1) `.clearNavigationBackground()` with iOS 18/17 branch, (2) `.adaptiveInnerBorder(color:cornerRadius:)` luminance-aware highlight (light colors get dark top edge, dark colors get light top edge — luminance>0.7 threshold), (3) UIWindow shake-detection plumbing + `.onShake(perform:)` (iOS only, posts on `UIDevice.deviceDidShakeNotification`).",
+  "meta": {
+    "created": 1777479389691,
+    "updated": 1777479389691
+  }
+}

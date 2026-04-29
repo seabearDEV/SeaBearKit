@@ -1,0 +1,7 @@
+{
+  "value": "Sources/SeaBearKit/Backgrounds/PersistentBackground.swift — Holds `BackgroundConfiguration` (currently single `showGradient: Bool` flag with `.standard`/`.minimal` presets) and `PersistentBackground` view that switches between GradientBackground and a plain system-background fallback. Also exposes `View.persistentBackground(palette:configuration:)` extension.",
+  "meta": {
+    "created": 1777479381835,
+    "updated": 1777479381835
+  }
+}

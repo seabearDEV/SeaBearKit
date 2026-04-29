@@ -1,0 +1,7 @@
+{
+  "value": "Sources/SeaBearKit/Backgrounds/ColorPalette.swift — `ColorPalette` value type + 9 static sample palettes (sunset, ocean, forest, monochrome, midnight, cherryBlossom, autumn, lavender, mint) and `samplePalettes` array. `Identifiable`/`Hashable`/`Sendable`. Default gradientIndices = [0, last]; default opacities = [0.5, 0.7].",
+  "meta": {
+    "created": 1777479377209,
+    "updated": 1777479377209
+  }
+}

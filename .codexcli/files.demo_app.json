@@ -1,0 +1,7 @@
+{
+  "value": "Sources/Demo/DemoApp.swift — Single-file SwiftUI demo app showcasing PersistentBackgroundNavigation with palette switching, both Automatic (PersistentNavigationLink) and Manual (NavigationLink + .clearNavigationBackground) approaches, and various demo views. Imports SeaBearKit. NOT declared as a Package.swift target — open in Xcode separately.",
+  "meta": {
+    "created": 1777479403562,
+    "updated": 1777479403562
+  }
+}

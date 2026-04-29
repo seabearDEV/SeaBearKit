@@ -1,0 +1,7 @@
+{
+  "value": "Every destination view in a PersistentBackgroundNavigation hierarchy MUST end with `.clearNavigationBackground()`, otherwise the gradient vanishes when navigating to that screen. The two recommended ways to satisfy this are: (1) wrap calls in `PersistentNavigationLink` / `.persistentNavigationDestination(...)` which auto-apply the modifier, or (2) manually add `.clearNavigationBackground()` to every destination's body. Mixing both styles in the same app is supported and intentional.",
+  "meta": {
+    "created": 1777479346830,
+    "updated": 1777479346830
+  }
+}

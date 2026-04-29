@@ -1,0 +1,7 @@
+{
+  "value": "ColorPalette = colors[] + gradientIndices[] + gradientOpacities[]. Indices select which palette colors appear in the gradient; opacities are applied at gradient build time (not stored on the Color). GradientBackground composes: system background base → vertical LinearGradient → RadialGradient vignette (darker in dark mode). All static — no animations — for battery efficiency. Luminance uses ITU-R BT.709 (0.299R + 0.587G + 0.114B). For repeated blends, use `Color.resolvedRGBA` once then `ResolvedRGBA.blend(to:progress:)` to avoid platform-color round-trips.",
+  "meta": {
+    "created": 1777479340995,
+    "updated": 1777479340995
+  }
+}

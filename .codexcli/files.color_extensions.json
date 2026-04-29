@@ -1,0 +1,7 @@
+{
+  "value": "Sources/SeaBearKit/Extensions/ColorExtensions.swift — `ResolvedRGBA` (Sendable, fast repeated-blend), Color extensions: resolvedRGBA, luminance (BT.709), isLight/isDark (parameterized), contrastingColor, adjustedBrightness, blend(from:to:progress:), blend(with:ratio:), toHex(), init(hex:) (supports 3/6/8 char hex). `WeightedColor` + `[WeightedColor].weightedLuminance` and `.contrastingColor(threshold:)` for gradient-aware contrast. Cross-platform (UIKit/AppKit branched via PlatformColor typealias).",
+  "meta": {
+    "created": 1777479386001,
+    "updated": 1777479386001
+  }
+}

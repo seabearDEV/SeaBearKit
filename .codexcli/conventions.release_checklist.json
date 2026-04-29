@@ -1,0 +1,7 @@
+{
+  "value": "When bumping version: (1) update `SeaBearKit.version` in Sources/SeaBearKit/SeaBearKit.swift, (2) update `testLibraryMetadata` in Tests/SeaBearKitTests/SeaBearKitTests.swift, (3) add a CHANGELOG.md section following the existing Keep-a-Changelog style with Added/Changed/Fixed/Technical buckets, (4) keep \"Zero breaking changes\" the default — when breaking, call it out explicitly and add a migration guide section. The README is also versioned in places (badges, requirements) — check before tagging.",
+  "meta": {
+    "created": 1777479426098,
+    "updated": 1777479426098
+  }
+}

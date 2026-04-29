@@ -1,0 +1,7 @@
+{
+  "value": "Tests/SeaBearKitTests/SeaBearKitTests.swift — 29 XCTest cases covering library metadata, palette creation/defaults, BackgroundConfiguration, sample palettes (count + names), color luminance/isLight/isDark/contrasting/blend/adjustedBrightness/hex/resolvedRGBA, time formatting (Int + Double), parameterized luminance with custom thresholds, WeightedColor + gradient luminance + gradient contrasting color, ShadowIntensity values + ordering, CornerRadiusStyle values + radius math + non-square + with padding. Includes a private CornerRadiusHelper that duplicates the production formula (production methods are static on View — see context.test_helper_duplication).",
+  "meta": {
+    "created": 1777479231481,
+    "updated": 1777479407324
+  }
+}

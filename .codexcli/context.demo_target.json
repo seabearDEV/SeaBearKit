@@ -1,0 +1,7 @@
+{
+  "value": "Sources/Demo/DemoApp.swift exists but is NOT a Package.swift target — `swift build` and `swift test` only touch the SeaBearKit library and SeaBearKitTests. DemoApp uses `@main` and imports SeaBearKit; it's intended to be opened in Xcode (likely via a separate project or Canvas previews). Do not assume `swift build` exercises Demo code, and don't add code there expecting CI to catch it.",
+  "meta": {
+    "created": 1777479357244,
+    "updated": 1777479357244
+  }
+}

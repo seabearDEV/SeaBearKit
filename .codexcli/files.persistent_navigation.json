@@ -1,0 +1,7 @@
+{
+  "value": "Sources/SeaBearKit/Navigation/PersistentBackgroundNavigation.swift — Generic ZStack wrapper, contains the iOS 18 vs iOS 17 branch for `.containerBackground(for: .navigation)`. Also holds three #Preview blocks plus private GlassNavigationButton/GlassButton helpers used only for previews.",
+  "meta": {
+    "created": 1777479371840,
+    "updated": 1777479371840
+  }
+}

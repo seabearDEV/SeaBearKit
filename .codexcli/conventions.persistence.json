@@ -1,0 +1,7 @@
+{
+  "value": ".codexcli/ = project knowledge store (any agent, file-per-entry layout). CLAUDE.md = Claude behavioral directives. MEMORY.md = personal user preferences. Rule: if another agent would benefit, it belongs in .codexcli/.",
+  "meta": {
+    "created": 1777479231482,
+    "updated": 1777479231482
+  }
+}

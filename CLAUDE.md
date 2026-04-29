@@ -4,7 +4,7 @@ Call `codex_context` as your first tool call to load all stored project knowledg
 
 ## Prefer MCP tools over direct file reads
 
-Always use codexCLI MCP tools (`codex_get`, `codex_set`, `codex_search`, etc.) to interact with `.codexcli.json`. Direct file reads bypass audit logging, alias resolution, and interpolation. The only acceptable reason to read `.codexcli.json` directly is debugging the MCP server itself.
+Always use codexCLI MCP tools (`codex_get`, `codex_set`, `codex_find`, etc.) to interact with `.codexcli.json`. Direct file reads bypass audit logging, alias resolution, and interpolation. The only acceptable reason to read `.codexcli.json` directly is debugging the MCP server itself.
 
 ## Before exploring code
 

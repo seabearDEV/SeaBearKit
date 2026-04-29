@@ -1,0 +1,7 @@
+{
+  "value": "Dual-platform: iOS 17+ (with iOS 18+ as the \"optimal\" target) and macOS 14+. iOS 18 uses `.containerBackground(for: .navigation) { Color.clear }` — the only fully-correct API. iOS 17 uses a fallback chain: `.toolbarBackground(.hidden, for: .navigationBar)` + `.toolbarBackground(.hidden, for: .bottomBar)` + `.scrollContentBackground(.hidden)` — works in ~90% of cases, may flicker on complex transitions, may need explicit `.scrollContentBackground(.hidden)` on Lists/Forms. Haptics, shake gesture, and PersistentNavigationLink are iOS-only (`@available(macOS, unavailable)` + `#if canImport(UIKit)`). Color utilities and time formatting are cross-platform.",
+  "meta": {
+    "created": 1777479341008,
+    "updated": 1777479341008
+  }
+}

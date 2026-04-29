@@ -1,0 +1,7 @@
+{
+  "value": "Core pattern: ZStack with persistent background outside NavigationStack, NavigationStack made transparent via `.containerBackground(for: .navigation) { Color.clear }` (iOS 18) or `.toolbarBackground(.hidden)` fallback (iOS 17). Each destination view MUST have `.clearNavigationBackground()` (or use `PersistentNavigationLink` which applies it automatically) — without it the gradient disappears at that level. Three-layer material stack on iOS 18: system UI (Liquid Glass) → content (Lists/Forms with materials) → transparent navigation container → persistent gradient.",
+  "meta": {
+    "created": 1777479340970,
+    "updated": 1777479340970
+  }
+}

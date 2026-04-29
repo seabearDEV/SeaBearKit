@@ -1,0 +1,7 @@
+{
+  "value": "Sources/SeaBearKit/Backgrounds/GradientBackground.swift — Static gradient (no animations). Composes system background + LinearGradient (top to bottom) + RadialGradient vignette (darker in dark mode). Uses Environment(\\.colorScheme). Has fallback if gradient config produces no valid colors.",
+  "meta": {
+    "created": 1777479379511,
+    "updated": 1777479379511
+  }
+}

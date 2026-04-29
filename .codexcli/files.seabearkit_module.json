@@ -1,0 +1,7 @@
+{
+  "value": "Sources/SeaBearKit/SeaBearKit.swift — Public umbrella struct exposing version/name/min/recommended iOS version constants. Pure documentation + metadata; no runtime behavior. Update `version` here AND in CHANGELOG.md AND in testLibraryMetadata when bumping.",
+  "meta": {
+    "created": 1777479369142,
+    "updated": 1777479369142
+  }
+}

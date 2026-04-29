@@ -1,0 +1,7 @@
+{
+  "value": "Sources/SeaBearKit/Utilities/HapticHelper.swift — `@MainActor` enum, iOS-only (`#if canImport(UIKit)`). Pre-instantiates 7 generators (light/medium/heavy/soft/rigid impact + notification + selection) at type level for low-latency feedback. Public API: impact(_:intensity:), notification(_:), selection(), prepare(_:). The `@MainActor` annotation was added in commit 85ad082 to fix Swift 6 concurrency errors with UIKit feedback generators.",
+  "meta": {
+    "created": 1777479398132,
+    "updated": 1777479398132
+  }
+}

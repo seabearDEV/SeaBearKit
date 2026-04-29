@@ -1,0 +1,7 @@
+{
+  "value": "iOS 17 fallback can fail in three known cases: (1) Lists/Forms may keep their opaque background — must add explicit `.scrollContentBackground(.hidden)`; (2) custom toolbar backgrounds (e.g. `.toolbarBackground(customColor, for: .navigationBar)`) conflict with the hidden-toolbar approach and need an `if #available(iOS 18.0, *)` guard; (3) complex NavigationStack transitions may briefly flicker. Document any new iOS 17-affecting change in IMPORTANT.md's \"iOS 17 Troubleshooting\" section. iOS 18+ does not have these caveats — it's the supported \"optimal\" path.",
+  "meta": {
+    "created": 1777479351013,
+    "updated": 1777479351013
+  }
+}

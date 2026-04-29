@@ -1,0 +1,7 @@
+{
+  "value": "SeaBearKit is a Swift Package (SPM) of SwiftUI layout patterns for iOS 17+/macOS 14+. The flagship feature is PersistentBackgroundNavigation — a NavigationStack wrapper that keeps a gradient/custom background visible across navigation transitions by isolating it outside the NavigationStack and forcing the container transparent. Surrounding utilities: 9 ColorPalettes, glass-style shadow/corner-radius/conditional modifiers, comprehensive Color extensions (luminance, blend, hex, weighted-gradient luminance), HapticHelper (iOS), shake detection (iOS), and time-formatting helpers. Pure SwiftUI, zero external deps. Author: Kory Hoopes (seabearDEV). MIT licensed. Current version 1.5.0.",
+  "meta": {
+    "created": 1777479421857,
+    "updated": 1777479421857
+  }
+}

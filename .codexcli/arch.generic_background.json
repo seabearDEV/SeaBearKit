@@ -1,0 +1,7 @@
+{
+  "value": "PersistentBackgroundNavigation is generic: `<Background: View, Content: View>`. The palette-based init lives in a constrained extension `where Background == PersistentBackground`. This shape was introduced in 1.2.0 to support arbitrary backgrounds (images, video, custom views) without breaking the palette API. When adding new background convenience initializers, follow the same pattern (constrained extension), not a new generic parameter.",
+  "meta": {
+    "created": 1777479340989,
+    "updated": 1777479340989
+  }
+}

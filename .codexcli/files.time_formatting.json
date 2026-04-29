@@ -1,0 +1,7 @@
+{
+  "value": "Sources/SeaBearKit/Extensions/TimeFormatting.swift — Tiny utility: `Int.formattedAsTime` returns \"M:SS\" / \"MM:SS\" (60 → \"1:00\", 3661 → \"61:01\"). `Double.formattedAsTime` casts to Int and reuses the Int impl. No hour formatting — only minutes:seconds, even past 60 minutes.",
+  "meta": {
+    "created": 1777479401173,
+    "updated": 1777479401173
+  }
+}

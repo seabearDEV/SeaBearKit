@@ -1,0 +1,7 @@
+{
+  "value": "Project requires Swift 6 strict concurrency. Public value types that cross actors (ColorPalette, BackgroundConfiguration, ResolvedRGBA, WeightedColor) are explicitly `Sendable`. HapticHelper is `@MainActor` because UIKit feedback generators are main-actor-isolated (see commit 85ad082 — fix added retroactively). When adding new public types, decide Sendable conformance early; when adding UIKit-touching utilities, default to `@MainActor`.",
+  "meta": {
+    "created": 1777479354548,
+    "updated": 1777479354548
+  }
+}

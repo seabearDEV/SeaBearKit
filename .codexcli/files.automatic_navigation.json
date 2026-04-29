@@ -1,0 +1,7 @@
+{
+  "value": "Sources/SeaBearKit/Navigation/AutomaticPersistentNavigation.swift — `PersistentNavigationLink` (drop-in NavigationLink replacement) plus three `persistentNavigationDestination(...)` View extensions (for, item:, isPresented:). All iOS-only. Each wrapper auto-applies `.clearNavigationBackground()`.",
+  "meta": {
+    "created": 1777479374150,
+    "updated": 1777479374150
+  }
+}

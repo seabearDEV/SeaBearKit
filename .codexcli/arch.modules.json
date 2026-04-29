@@ -1,0 +1,7 @@
+{
+  "value": "Folder layout under Sources/SeaBearKit/: Backgrounds/ (ColorPalette, GradientBackground, PersistentBackground+BackgroundConfiguration), Navigation/ (PersistentBackgroundNavigation = main wrapper, AutomaticPersistentNavigation = PersistentNavigationLink + persistentNavigationDestination overloads), Modifiers/ (ConditionalModifiers `.if()`, ShadowModifiers `.glassShadow()` + ShadowIntensity, CornerRadiusModifiers `.adaptiveCornerRadius()` + CornerRadiusStyle), Extensions/ (ColorExtensions = luminance/blend/hex/WeightedColor, ViewExtensions = `.clearNavigationBackground()` + `.adaptiveInnerBorder()` + `.onShake()`, TimeFormatting = Int/Double `.formattedAsTime`), Utilities/ (HapticHelper @MainActor enum, iOS only). Sources/Demo/ has DemoApp.swift but is NOT a Package.swift target — only the SeaBearKit library and tests are declared.",
+  "meta": {
+    "created": 1777479341014,
+    "updated": 1777479341014
+  }
+}
