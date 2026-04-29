@@ -1,0 +1,7 @@
+{
+  "value": "Sources/SeaBearKit/Fonts/FontGlyph.swift — `FontGlyph` `UIViewRepresentable` wrapping `UILabel` with `clipsToBounds = false` and `layer.masksToBounds = false`. iOS-only (`#if canImport(UIKit)`), `@MainActor`, `public`. Two inits: String and Character. Public stored fields: glyph, fontName, size, color (default `.primary`). Falls back to `systemFont(ofSize:)` when the named font isn't registered. `lineBreakMode = .byClipping` to prevent ellipsis on single-character glyphs. Added in 1.6.0.",
+  "meta": {
+    "created": 1777485163801,
+    "updated": 1777485163801
+  }
+}

@@ -5,6 +5,21 @@ All notable changes to SeaBearKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.0] - 2026-04-29
+
+### Added
+- **FontGlyph**: SwiftUI view for rendering custom-font glyphs without typographic-bounds clipping (iOS only)
+  - `FontGlyph(_:fontName:size:color:)` - String initializer (typical for single Unicode codepoints in icon fonts)
+  - `FontGlyph(_:fontName:size:color:)` - Character convenience initializer
+  - Wraps `UILabel` via `UIViewRepresentable` with `clipsToBounds = false` so glyphs whose visual extent exceeds the font's typographic line bounds (common in Font Awesome decorative styles, Material Symbols rounded variants, Phosphor, and stylized display fonts) render fully into the surrounding SwiftUI frame
+  - `@MainActor`-isolated to match Swift 6 strict concurrency posture
+  - Defaults `color` to `.primary`; falls back to `systemFont(ofSize:)` when the named font isn't registered
+
+### Technical
+- New `Fonts/` directory in package structure
+- iOS-only (`#if canImport(UIKit)`) following the `HapticHelper` precedent; macOS variant via `NSViewRepresentable` is noted as future work
+- Zero breaking changes - additive public API only
+
 ## [1.5.0] - 2026-02-03
 
 ### Added
@@ -204,6 +219,7 @@ PersistentNavigationLink("Details") {
 }
 ```
 
+[1.6.0]: https://github.com/seabearDEV/SeaBearKit/compare/v1.5.0...v1.6.0
 [1.5.0]: https://github.com/seabearDEV/SeaBearKit/compare/v1.4.0...v1.5.0
 [1.4.0]: https://github.com/seabearDEV/SeaBearKit/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/seabearDEV/SeaBearKit/compare/v1.2.0...v1.3.0

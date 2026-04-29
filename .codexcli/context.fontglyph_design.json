@@ -1,0 +1,7 @@
+{
+  "value": "FontGlyph exists because SwiftUI's `Text` clips its rendering to the font's typographic line bounds (ascent + descent) inside its own drawing context — before `.frame()`, `.fixedSize()`, or `.padding()` apply. So glyphs whose visual extent exceeds those bounds (Font Awesome decorative styles, Material Symbols rounded variants, Phosphor, stylized display fonts) get visually clipped on top/bottom even when the surrounding SwiftUI frame is huge. The fix is a `UILabel` wrapped in `UIViewRepresentable` with both `clipsToBounds = false` AND `layer.masksToBounds = false` — both are required, the layer flag is the one most often missed. The label's typographic bounds are still its layout size; turning off masking lets the visual overshoot draw through. SwiftUI's `.foregroundStyle()` does NOT apply because it's UIView-backed — color must be passed in via the init's `color:` parameter (bridged to `UIColor` via `UIColor(color)` which requires iOS 14+; SeaBearKit's iOS 17 floor covers this fine). Pattern was developed in /Users/kh/Projects/github.com/seabearDEV/sandbox/font-awesome/font-awesome-ios (`struct FAGlyph`) and graduated to SeaBearKit in 1.6.0.",
+  "meta": {
+    "created": 1777485177146,
+    "updated": 1777485177146
+  }
+}

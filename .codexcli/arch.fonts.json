@@ -1,0 +1,7 @@
+{
+  "value": "Sources/SeaBearKit/Fonts/ holds font-rendering helpers. Currently just `FontGlyph` (1.6.0). Scope is small SwiftUI utilities that fix specific Text/font rendering shortfalls — not a font-loading or font-discovery system. Future possibilities (not yet implemented): NSViewRepresentable variant for macOS, a `LoadedFontsDebugView` listing registered families/PostScript names. New file types in this folder should keep the same iOS-only `#if canImport(UIKit)` gating until macOS variants are added.",
+  "meta": {
+    "created": 1777485168278,
+    "updated": 1777485168278
+  }
+}

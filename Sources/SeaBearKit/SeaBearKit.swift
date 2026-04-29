@@ -54,6 +54,9 @@ import SwiftUI
 /// - `.adaptiveInnerBorder(color:cornerRadius:)` - Luminance-aware highlight border
 /// - `.onShake(perform:)` - Shake gesture detection (iOS only)
 ///
+/// ### Fonts
+/// - `FontGlyph` - Renders custom-font glyphs without SwiftUI Text's typographic-bounds clipping (iOS only)
+///
 /// ### Utilities
 /// - `HapticHelper` - Low-latency haptic feedback (iOS only)
 /// - `Int.formattedAsTime` / `Double.formattedAsTime` - MM:SS formatting
@@ -93,7 +96,7 @@ import SwiftUI
 ///
 public struct SeaBearKit {
     /// Library version
-    public static let version = "1.5.0"
+    public static let version = "1.6.0"
 
     /// Library name
     public static let name = "SeaBearKit"
