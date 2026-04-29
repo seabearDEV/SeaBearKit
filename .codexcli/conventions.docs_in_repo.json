@@ -1,0 +1,7 @@
+{
+  "value": "Project carries unusually many top-level .md files (README, USAGE, QUICKSTART, ARCHITECTURE, IMPORTANT, LIQUID_GLASS, DEMO, CONTRIBUTING, CHANGELOG). Update the relevant ones when changing public API — they're treated as first-class docs, not stale notes. Migrated from prior single-file .codexcli.json on 2026-04-29.",
+  "meta": {
+    "created": 1777480471366,
+    "updated": 1777480471366
+  }
+}

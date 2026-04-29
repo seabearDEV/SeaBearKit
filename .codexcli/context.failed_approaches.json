@@ -1,0 +1,7 @@
+{
+  "value": "Approaches tried and rejected before arriving at the ZStack pattern: (1) LinearGradient tint overlays — broke navigation rendering; (2) direct .background modifiers on NavigationStack — inconsistent during palette changes; (3) multiple gradient layers — perf and visibility issues. Don't relitigate without reading ARCHITECTURE.md's \"Failed Approaches\" section. Migrated from prior single-file .codexcli.json on 2026-04-29.",
+  "meta": {
+    "created": 1777480473046,
+    "updated": 1777480473046
+  }
+}
