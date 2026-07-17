@@ -236,6 +236,8 @@ Uses `.containerBackground(for: .navigation) { Color.clear }` for complete trans
 - Optimal rendering quality
 - Optimal navigation transitions
 - Full Liquid Glass design system integration
+- `.scrollContentBackground(.hidden)` applied as well — List/Form draw their own
+  scroll background on top of the cleared container, so both are needed
 
 ### iOS 17 (Graceful Degradation)
 

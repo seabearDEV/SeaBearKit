@@ -1,6 +1,6 @@
 //
 //  PersistentBackground.swift
-//  IOSLayouts
+//  SeaBearKit
 //
 //  Composable background component that combines gradient backgrounds.
 //  The main reusable background system for persistent navigation.

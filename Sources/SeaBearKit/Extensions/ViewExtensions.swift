@@ -45,10 +45,13 @@ extension View {
     public func clearNavigationBackground() -> some View {
         Group {
             if #available(iOS 18.0, *) {
-                // iOS 18: Optimal solution using containerBackground
+                // iOS 18: Optimal solution using containerBackground.
+                // Lists and Forms still draw their own scroll background on
+                // top of the cleared container, so hide that here as well.
                 self.containerBackground(for: .navigation) {
                     Color.clear
                 }
+                .scrollContentBackground(.hidden)
             } else {
                 // iOS 17: Fallback using toolbar background hiding
                 self

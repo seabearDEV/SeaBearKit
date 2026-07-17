@@ -5,6 +5,20 @@ All notable changes to SeaBearKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.1] - 2026-07-17
+
+### Fixed
+- **iOS 18+ List/Form transparency**: `clearNavigationBackground()` now applies `.scrollContentBackground(.hidden)` on iOS 18+ as well (previously only in the iOS 17 fallback branch). `List` and `Form` draw their own scroll background on top of the cleared navigation container, so on iOS 18+ they rendered fully opaque and hid the persistent background
+  - Behavior note: no API changes, but consumers who relied on opaque scrollable content over the gradient must now set an explicit background on those views
+
+### Changed
+- Demo app UI strings renamed from the legacy "IOSLayouts Demo" to "SeaBearKit"; stale `IOSLayouts` source file headers cleaned up
+- Demo List/Form screens rely on the library for transparency (no explicit `.scrollContentBackground(.hidden)` workarounds)
+
+### Technical
+- New marketing screenshot pipeline: `tools/screenshots/shoot.sh` builds the demo app directly with `swiftc` (no Xcode project required), poses seven slides via the `SEABEAR_SNAP` launch-environment harness (`Sources/Demo/SnapHarness.swift`), and composes captioned 1320x2868 finals into `AppStore/screenshots/final/` via `tools/screenshots/compose.py`
+- Docs updated to describe both halves of the transparency mechanism (LIQUID_GLASS, USAGE, QUICKSTART, README, IMPORTANT, ARCHITECTURE, DEMO)
+
 ## [1.6.0] - 2026-04-29
 
 ### Added

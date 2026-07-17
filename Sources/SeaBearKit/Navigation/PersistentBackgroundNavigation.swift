@@ -1,6 +1,6 @@
 //
 //  PersistentBackgroundNavigation.swift
-//  IOSLayouts
+//  SeaBearKit
 //
 //  NavigationStack wrapper with persistent background across navigation transitions.
 //  Child views call .clearNavigationBackground() to reveal the background.

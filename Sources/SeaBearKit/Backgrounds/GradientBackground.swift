@@ -1,6 +1,6 @@
 //
 //  GradientBackground.swift
-//  IOSLayouts
+//  SeaBearKit
 //
 //  A static gradient background with vignette effect for depth.
 //  Extremely battery efficient with no animations.

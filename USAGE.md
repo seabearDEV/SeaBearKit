@@ -337,7 +337,7 @@ ZStack {
 }
 ```
 
-The `.containerBackground(for: .navigation) { Color.clear }` modifier renders the NavigationStack transparent, exposing the persistent background layer and ensuring consistent rendering during transitions.
+The `.containerBackground(for: .navigation) { Color.clear }` modifier renders the NavigationStack transparent, exposing the persistent background layer and ensuring consistent rendering during transitions. `List` and `Form` additionally draw their own scroll background on top of the cleared container, so `.clearNavigationBackground()` also applies `.scrollContentBackground(.hidden)`.
 
 ## Best Practices
 

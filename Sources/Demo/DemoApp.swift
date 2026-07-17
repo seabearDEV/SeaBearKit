@@ -10,21 +10,34 @@ import SeaBearKit
 
 @main
 struct DemoApp: App {
-    @State private var selectedPalette: ColorPalette = .sunset
+    @State private var selectedPalette: ColorPalette = Snapshot.current?.palette ?? .sunset
     @State private var configuration: BackgroundConfiguration = .standard
 
     var body: some Scene {
         WindowGroup {
-            PersistentBackgroundNavigation(
-                palette: selectedPalette,
-                configuration: configuration
-            ) {
-                MainMenuView(
-                    selectedPalette: $selectedPalette,
-                    configuration: $configuration
-                )
+            if Snapshot.current == .custom {
+                PersistentBackgroundNavigation {
+                    GridPatternBackground()
+                } content: {
+                    mainMenu
+                }
+            } else {
+                PersistentBackgroundNavigation(
+                    palette: selectedPalette,
+                    configuration: configuration
+                ) {
+                    mainMenu
+                }
             }
         }
+    }
+
+    private var mainMenu: some View {
+        MainMenuView(
+            selectedPalette: $selectedPalette,
+            configuration: $configuration
+        )
+        .snapAutoPush()
     }
 }
 
@@ -91,7 +104,7 @@ struct MainMenuView: View {
 
             Section("About") {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("IOSLayouts Demo")
+                    Text("SeaBearKit Demo")
                         .font(.headline)
                     Text("Showcasing two navigation approaches: Automatic (PersistentNavigationLink) for simplified usage, and Manual (.clearNavigationBackground()) for advanced control. Both maintain consistent background persistence.")
                         .font(.caption)
@@ -99,7 +112,7 @@ struct MainMenuView: View {
                 }
             }
         }
-        .navigationTitle("IOSLayouts Demo")
+        .navigationTitle("SeaBearKit")
         .navigationBarTitleDisplayMode(.large)
         .clearNavigationBackground()
     }

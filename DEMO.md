@@ -129,3 +129,13 @@ PersistentBackgroundNavigation(palette: .sunset) {
 ```
 
 The architectural difference ensures consistent rendering during navigation transitions.
+
+## Marketing Screenshots
+
+The repository's screenshot set (`AppStore/screenshots/final/`) is generated from
+the demo app by `tools/screenshots/shoot.sh`, run from the repo root with the
+iPhone 17 Pro Max simulator installed. Because the demo is not a Package.swift
+target, the script builds it directly with `swiftc` — no Xcode project needed —
+then poses each slide via the `SEABEAR_SNAP` launch-environment harness in
+`Sources/Demo/SnapHarness.swift` (inert during normal use) and composes captioned
+finals with `tools/screenshots/compose.py`. Captions live in `compose.py`.

@@ -29,7 +29,9 @@ NavigationLink("Details") {
 
 ### iOS 18+ (Optimal Experience)
 
-Uses `.containerBackground(for: .navigation)` for complete transparency.
+Uses `.containerBackground(for: .navigation)` for complete transparency, plus
+`.scrollContentBackground(.hidden)` so List/Form scroll backgrounds don't cover
+the persistent background.
 
 ### iOS 17 (Fallback)
 

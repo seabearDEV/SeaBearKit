@@ -1,6 +1,6 @@
 //
 //  AutomaticPersistentNavigation.swift
-//  IOSLayouts
+//  SeaBearKit
 //
 //  Automatic navigation wrappers that eliminate manual modifier requirements.
 //  These components automatically apply .clearNavigationBackground() to destinations.

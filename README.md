@@ -414,7 +414,7 @@ ZStack {
 }
 ```
 
-This approach ensures consistent background rendering throughout navigation transitions.
+This approach ensures consistent background rendering throughout navigation transitions. In practice, use `.clearNavigationBackground()` — it also hides `List`/`Form` scroll backgrounds, which would otherwise cover the persistent background.
 
 ## Project Origins
 

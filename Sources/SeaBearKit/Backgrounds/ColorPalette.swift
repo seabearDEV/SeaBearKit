@@ -1,6 +1,6 @@
 //
 //  ColorPalette.swift
-//  IOSLayouts
+//  SeaBearKit
 //
 //  Flexible color palette system for backgrounds and UI theming.
 //  Supports gradient configuration with indices and opacity control.

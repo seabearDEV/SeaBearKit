@@ -64,7 +64,7 @@ The persistent gradient provides:
 
 **Principle:** Use `scrollEdgeEffectStyle(_:for:)` for legibility
 
-System `List` and `Form` automatically handle this when used with `.containerBackground(for: .navigation)`
+System `List` and `Form` draw their own scroll background on top of the cleared navigation container, so both `.containerBackground(for: .navigation)` and `.scrollContentBackground(.hidden)` are needed — `.clearNavigationBackground()` applies both
 
 ## Liquid Glass in Action
 
@@ -86,6 +86,10 @@ struct DetailView: View {
         .containerBackground(for: .navigation) {
             Color.clear  // Shows persistent gradient
         }
+        .scrollContentBackground(.hidden)  // List/Form draw their own
+                                           // background on top of the
+                                           // cleared container
+        // Or simply: .clearNavigationBackground() — applies both
     }
 }
 ```
@@ -94,7 +98,7 @@ struct DetailView: View {
 
 1. **System UI** (Navigation bar, toolbars) - Liquid Glass materials
 2. **Content UI** (Lists, Forms) - Liquid Glass materials
-3. **Navigation Container** - Transparent (`.containerBackground`)
+3. **Navigation Container** - Transparent (`.containerBackground` + `.scrollContentBackground(.hidden)`)
 4. **Persistent Gradient** - Custom background
 
 This creates the signature Liquid Glass depth while maintaining the persistent background effect.

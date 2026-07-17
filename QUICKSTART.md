@@ -194,7 +194,7 @@ ZStack {
 }
 ```
 
-This pattern was developed through iterative refinement.
+This pattern was developed through iterative refinement. In practice, use `.clearNavigationBackground()` — it also hides `List`/`Form` scroll backgrounds, which would otherwise cover the persistent background.
 
 ## Support
 
