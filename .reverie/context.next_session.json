@@ -1,0 +1,7 @@
+{
+  "value": "2026-07-17 close (screenshots marathon across 3 repos). SeaBearKit: v1.6.1 committed on main (iOS 18 List/Form transparency fix + screenshot pipeline + banner.py) — TAG DELIBERATELY HELD, Kory wants to add more before releasing; Tesserae pins SeaBearKit from the GitHub remote so the fix doesn't reach it until tagged+pinned. Tesserae: PR #232 (screenshot-pipeline branch) awaiting Kory's review/merge. seabear.dev: all four product banners refreshed to 2026_07_17 at 1712x856; site commits pushed/deployed by Kory (verified live). Recipes: commands.screenshots here and in each repo's own store.",
+  "meta": {
+    "created": 1784321414897,
+    "updated": 1784321414897
+  }
+}
