@@ -1,0 +1,7 @@
+{
+  "value": ".reverie/ = project knowledge store (any agent, file-per-entry layout; migrated from .codexcli/ on 2026-07-17, which was itself migrated from a single-file .codexcli.json). CLAUDE.md = Claude behavioral directives (updated to reverie_* tool names 2026-07-17). MEMORY.md = personal user preferences. Rule: if another agent would benefit, it belongs in .reverie/.",
+  "meta": {
+    "created": 1777479231482,
+    "updated": 1784319211029
+  }
+}

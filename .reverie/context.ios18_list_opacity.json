@@ -1,0 +1,7 @@
+{
+  "value": "RESOLVED 2026-07-17 (found while shooting screenshots on the iOS 26 sim): `clearNavigationBackground()`'s iOS 18+ branch originally only applied `containerBackground(for: .navigation) { Color.clear }`, which clears the nav container but NOT a List/Form's own scroll background — so on iOS 18+ every List/Form screen rendered opaque and hid the persistent gradient (VStack screens were fine). Fix (user-approved): the iOS 18 branch now also applies `.scrollContentBackground(.hidden)`, matching the iOS 17 fallback branch. Both are needed on iOS 18 — List/Form draw their scroll background on top of the cleared container. This is a behavior change for any consumer who relied on opaque lists over the gradient; IMPORTANT.md and ARCHITECTURE.md platform sections updated, but no CHANGELOG entry yet — add one at the next version bump per conventions.release_checklist. Verified end to end via the screenshot pipeline with the demo's explicit workarounds removed.",
+  "meta": {
+    "created": 1784318708345,
+    "updated": 1784318883969
+  }
+}

@@ -1,8 +1,8 @@
 {
   "mcpServers": {
-    "codexcli": {
+    "reverie": {
       "type": "stdio",
-      "command": "ccli",
+      "command": "rvr",
       "args": [
         "mcp-server",
         "--cwd",

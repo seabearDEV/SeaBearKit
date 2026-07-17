@@ -1,0 +1,7 @@
+{
+  "value": "Sources/Demo/DemoApp.swift — Single-file SwiftUI demo app showcasing PersistentBackgroundNavigation with palette switching, both Automatic (PersistentNavigationLink) and Manual (NavigationLink + .clearNavigationBackground) approaches, and various demo views. Imports SeaBearKit. NOT declared as a Package.swift target — open in Xcode separately, or built headlessly by tools/screenshots/shoot.sh via swiftc. Since 2026-07-17: UI strings renamed from stale \"IOSLayouts Demo\" to SeaBearKit; List/Form screens carry explicit .scrollContentBackground(.hidden) (see context.ios18_list_opacity); DemoApp consults Sources/Demo/SnapHarness.swift (SEABEAR_SNAP env var screenshot harness — inert in normal use) for initial palette, the custom-background branch, and .snapAutoPush().",
+  "meta": {
+    "created": 1777479403562,
+    "updated": 1784318711344
+  }
+}
