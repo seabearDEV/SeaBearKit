@@ -83,6 +83,7 @@ public enum HapticHelper {
         } else {
             generator.impactOccurred()
         }
+        generator.prepare()
     }
 
     // MARK: - Notification Feedback
@@ -92,6 +93,7 @@ public enum HapticHelper {
     /// - Parameter type: The notification feedback type
     public static func notification(_ type: UINotificationFeedbackGenerator.FeedbackType) {
         notificationGenerator.notificationOccurred(type)
+        notificationGenerator.prepare()
     }
 
     // MARK: - Selection Feedback
@@ -102,6 +104,7 @@ public enum HapticHelper {
     /// or any momentary selection feedback.
     public static func selection() {
         selectionGenerator.selectionChanged()
+        selectionGenerator.prepare()
     }
 
     // MARK: - Prepare (Optional)

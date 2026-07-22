@@ -5,6 +5,26 @@ All notable changes to SeaBearKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.0] - 2026-07-22
+
+### Added
+- **ReorderableVStack**: First control graduated from the SwiftUI Lab incubator
+  - Press-and-hold drag-to-reorder with full control over the dragged row (no system lift box)
+  - Gap-open technique: the array is untouched mid-drag and committed once on release
+  - Native hold-vs-pan coexistence via a long-press recognizer on the enclosing scroll view
+  - Edge auto-scroll that keeps the row pinned under a stationary finger
+  - Haptic choreography through `HapticHelper`, velocity lean, elastic ends
+  - Reduce Motion drops the decorative lift scale and lean
+  - VoiceOver reordering via Move Up / Move Down actions
+  - Cross-platform: UIKit recognizer path on iOS, SwiftUI fallback elsewhere
+- **ElasticDrag**: Rubber-band drag damping utility with logarithmic falloff
+- **Test Coverage**: 15 ported unit tests for reorder targeting, gap displacement,
+  auto-scroll velocity, and elastic damping (total tests increased from 29 to 44)
+
+### Changed
+- **HapticHelper**: Generators now re-prepare after each fire, so repeated ticks
+  (e.g. reorder slot crossings) keep full warm latency
+
 ## [1.6.1] - 2026-07-17
 
 ### Fixed

@@ -35,6 +35,10 @@ import SwiftUI
 /// - `CornerRadiusStyle` - Predefined corner radius presets
 /// - `ShadowIntensity` - Shadow intensity levels (.subtle, .regular, .prominent)
 ///
+/// ### Controls
+/// - `ReorderableVStack` - Press-and-hold drag-to-reorder stack with gap-open rows
+/// - `ElasticDrag` - Rubber-band drag damping helper
+///
 /// ### Color System
 /// - `ColorPalette` - Flexible color palette with gradient configuration
 /// - Sample palettes: `.sunset`, `.ocean`, `.forest`, `.monochrome`
@@ -96,7 +100,7 @@ import SwiftUI
 ///
 public struct SeaBearKit {
     /// Library version
-    public static let version = "1.6.1"
+    public static let version = "1.7.0"
 
     /// Library name
     public static let name = "SeaBearKit"
