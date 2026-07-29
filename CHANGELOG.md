@@ -5,6 +5,27 @@ All notable changes to SeaBearKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.8.0] - 2026-07-28
+
+### Added
+- **LiquidToggle**: Metaball toggle graduated from the SwiftUI Lab incubator
+  - Knob is a liquid drop: stretches into a neck as it moves, pinches clean in
+    two under a full-stretch flick, ejects satellite droplets, re-merges at rest
+  - Tap or drag-scrub with velocity commit; a resting finger squishes the drop
+    (area-preserving anticipation) before it launches
+  - Haptic choreography through `HapticHelper`: a rigid tick lands on the exact
+    visual pinch and a soft one on re-merge (crossings pre-computed from the
+    deterministic settle curves), light tick on commit
+  - `TimelineView(.animation)` mounts only while dragging or settling; the
+    resting knob is a static branch (no continuous rendering)
+  - Reduce Motion drops the tail lag to zero and suppresses the splash
+  - Accessibility element with button/selected traits, On/Off value, and toggle action
+  - Resizing note documented in-source: the pinch threshold is radius-invariant
+    (~1.93x knob radius) and must be re-derived via the scanline sweep for any
+    new geometry; keep travel/radius at 2.0 to preserve the flick-only split
+- **Test Coverage**: 20 ported unit tests for pinch event scheduling, splash
+  droplet ballistics, and the tail trace (total tests increased from 44 to 64)
+
 ## [1.7.0] - 2026-07-22
 
 ### Added
