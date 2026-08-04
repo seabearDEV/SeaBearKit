@@ -37,6 +37,7 @@ import SwiftUI
 ///
 /// ### Controls
 /// - `ReorderableVStack` - Press-and-hold drag-to-reorder stack with gap-open rows
+/// - `LiquidToggle` - Metaball toggle whose knob necks, pinches, and re-merges
 /// - `ElasticDrag` - Rubber-band drag damping helper
 ///
 /// ### Color System
@@ -100,7 +101,7 @@ import SwiftUI
 ///
 public struct SeaBearKit {
     /// Library version
-    public static let version = "1.7.0"
+    public static let version = "1.8.0"
 
     /// Library name
     public static let name = "SeaBearKit"
