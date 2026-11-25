@@ -1,0 +1,5 @@
+# Names the one command that takes shots of the demo app for a caller outside
+# this repo. tools/capture.py says how it is asked.
+
+[capture]
+command = "tools/capture.py"
