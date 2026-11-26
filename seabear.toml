@@ -1,5 +1,10 @@
-# Names the one command that takes shots of the demo app for a caller outside
-# this repo. tools/capture.py says how it is asked.
+# Read by tooling outside this repo: [studio] marks it as a repo that tooling
+# works with, and [capture] names the one command that takes shots of the
+# demo app. tools/capture.py says how it is asked.
+
+[studio]
+standard = 1
+name = "SeaBearKit"
 
 [capture]
 command = "tools/capture.py"
