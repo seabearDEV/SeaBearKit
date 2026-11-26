@@ -26,7 +26,7 @@ final class ElasticDragTests: XCTestCase {
         let result = ElasticDrag.value(200, comfortZone: comfortZone)
         XCTAssertGreaterThan(result, comfortZone)
         XCTAssertLessThan(result, 200, "Damped value should trail the raw drag")
-        XCTAssertEqual(result, 100 + log(1 + 100) * 8, accuracy: 0.001)
+        XCTAssertEqual(result, 100 + 8 * log(1 + 100 / 8.0), accuracy: 0.001)
     }
 
     func testSymmetricBehavior() {
@@ -45,6 +45,33 @@ final class ElasticDragTests: XCTestCase {
         let result = ElasticDrag.value(50, comfortZone: 0)
         XCTAssertLessThan(result, 50)
         XCTAssertGreaterThan(result, 0)
+    }
+
+    /// The band must never run ahead of the finger. The previous curve had a
+    /// slope of 8 at the boundary and overtook the raw drag for the first
+    /// 26 pt of overshoot, which no test at the time could see because they
+    /// all probed an excess of 50 pt or more.
+    func testNeverOvertakesTheRawDrag() {
+        for zone in [CGFloat(0), 1, 40, 100] {
+            for step in 0...400 {
+                let raw = CGFloat(step) / 2
+                let damped = ElasticDrag.value(raw, comfortZone: zone)
+                XCTAssertLessThanOrEqual(
+                    damped, raw + 1e-9,
+                    "value(\(raw), comfortZone: \(zone)) = \(damped) overtook the drag")
+                XCTAssertGreaterThanOrEqual(
+                    ElasticDrag.value(-raw, comfortZone: zone), -raw - 1e-9)
+            }
+        }
+    }
+
+    /// Slope 1 at the boundary: the handoff from 1:1 tracking into the band
+    /// has no visible kink.
+    func testSlopeAtTheBoundaryIsOne() {
+        let zone: CGFloat = 100
+        let step: CGFloat = 0.01
+        let slope = (ElasticDrag.value(zone + step, comfortZone: zone) - zone) / step
+        XCTAssertEqual(slope, 1, accuracy: 0.01)
     }
 }
 

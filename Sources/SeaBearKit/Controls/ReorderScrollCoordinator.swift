@@ -75,6 +75,10 @@ final class ReorderScrollCoordinator: NSObject, UIGestureRecognizerDelegate {
             host.removeGestureRecognizer(recognizer)
         }
         recognizer = nil
+        // No scroll view means nothing to install on, and the control is
+        // touch-inert: the requirement is stated on ReorderableVStack's doc
+        // comment. Deliberately silent, because this library ships no logging
+        // and an assertion here would fire on transient hierarchy states.
         guard let scrollView else { return }
         let press = UILongPressGestureRecognizer(target: self, action: #selector(handlePress))
         press.minimumPressDuration = activationDelay
@@ -89,6 +93,11 @@ final class ReorderScrollCoordinator: NSObject, UIGestureRecognizerDelegate {
         }
         recognizer = nil
         scrollView?.isScrollEnabled = true
+        // Cleared so that re-entering a window under the SAME scroll view
+        // instance still reads as a change and reinstalls the recognizer.
+        // Left set, didMoveToWindow reassigned an identical value, didSet
+        // skipped the install, and reordering silently stopped working.
+        scrollView = nil
     }
 
     @objc private func handlePress(_ press: UILongPressGestureRecognizer) {

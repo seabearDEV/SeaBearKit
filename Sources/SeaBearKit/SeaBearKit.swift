@@ -101,7 +101,7 @@ import SwiftUI
 ///
 public struct SeaBearKit {
     /// Library version
-    public static let version = "1.8.0"
+    public static let version = "1.8.1"
 
     /// Library name
     public static let name = "SeaBearKit"

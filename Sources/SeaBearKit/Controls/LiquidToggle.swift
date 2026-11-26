@@ -234,6 +234,11 @@ public struct LiquidToggle: View {
                     settleTask?.cancel()
                     pinchTask?.cancel()
                     transition = nil
+                    // Silently, not through setPinched: the trace was just
+                    // reseeded to the current tail, so the field starts this
+                    // drag fused and owes no re-merge tick for a separation
+                    // that belonged to the last one.
+                    pinched = false
                     pressedAt = now
                     releaseSquish = nil
                 }
@@ -287,6 +292,12 @@ public struct LiquidToggle: View {
             guard !Task.isCancelled else { return }
             settled = target
             transition = nil
+            // At rest the two circles are fused by definition. The scheduled
+            // events can end with pinched still true when the release tail is
+            // sampled a hair later than the last onChanged and the scripted
+            // separation never crosses back under the threshold; leaving it
+            // set makes the next touch-down fire a spurious soft re-merge.
+            pinched = false
         }
         schedulePinchHaptics(fromHead: fromHead, fromTail: fromTail, to: target, duration: duration)
     }

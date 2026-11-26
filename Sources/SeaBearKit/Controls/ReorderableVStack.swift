@@ -19,16 +19,28 @@ import UIKit
 /// put while a gap opens (neighbouring rows offset out of the way) and the
 /// dragged row follows the finger. The reorder is committed once, on release.
 ///
-/// Scroll coexistence works by watching, not blocking: a simultaneous
-/// zero-distance drag observes every row without claiming the scroll pan, so a
-/// swipe from any row scrolls the host even when rows fill the screen. A
-/// finger that stays put for `activationDelay` lifts the row instead (shadow
-/// and scale before any movement), freezes the enclosing scroll view so all
-/// further motion belongs to the reorder, and releases it on drop.
+/// Scroll coexistence is settled in UIKit, not SwiftUI. A SwiftUI drag
+/// gesture never co-recognizes with `UIScrollView`'s pan, so on iOS the rows
+/// carry no gesture at all: a `UILongPressGestureRecognizer` is installed on
+/// the nearest enclosing scroll view, which gives the system's own hold versus
+/// pan arbitration. A swipe pans, movement before `activationDelay` cancels
+/// the hold, and a stationary hold lifts the row (shadow and scale before any
+/// movement), freezes the scroll view so all further motion belongs to the
+/// reorder, and releases it on drop. Where UIKit is unavailable the control
+/// falls back to a per-row simultaneous zero-distance drag.
+///
+/// - Important: On iOS this control needs a `UIScrollView` ancestor, which in
+///   practice means being inside a `ScrollView` or a `List`. Without one there
+///   is nothing to install the recognizer on and the stack is touch-inert,
+///   leaving only the Move Up and Move Down accessibility actions. Rows must
+///   also be uniform height: the lifted index is derived from the touch's y
+///   divided by the slot height.
 ///
 /// ```swift
-/// ReorderableVStack(items: $items) { item in
-///     Text(item.title)
+/// ScrollView {
+///     ReorderableVStack(items: $items) { item in
+///         Text(item.title)
+///     }
 /// }
 /// ```
 public struct ReorderableVStack<Item: Identifiable, Row: View>: View {
@@ -120,6 +132,12 @@ public struct ReorderableVStack<Item: Identifiable, Row: View>: View {
         }
         .onDisappear {
             cancelHold()
+            // The auto-scroll loop spins until draggingIndex clears, which
+            // only commit() does, so leaving the hierarchy mid-drag left it
+            // running at 60 Hz against a view that is gone.
+            stopAutoScroll()
+            tiltSettle?.cancel()
+            tiltSettle = nil
             restoreScroll()
         }
         #if canImport(UIKit)
@@ -368,13 +386,18 @@ enum ReorderMath {
         struct Item: Identifiable { let id = UUID(); let label: String }
         @State var items = ["Alpha", "Bravo", "Charlie", "Delta"].map { Item(label: $0) }
         var body: some View {
-            ReorderableVStack(items: $items) { item in
-                Text(item.label)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-                    .padding(.horizontal)
-                    .background(.blue.opacity(0.12), in: RoundedRectangle(cornerRadius: 12))
+            // The ScrollView is required, not decoration: on iOS the
+            // recognizer is installed on the enclosing scroll view, so
+            // without one the preview cannot be dragged at all.
+            ScrollView {
+                ReorderableVStack(items: $items) { item in
+                    Text(item.label)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+                        .padding(.horizontal)
+                        .background(.blue.opacity(0.12), in: RoundedRectangle(cornerRadius: 12))
+                }
+                .padding()
             }
-            .padding()
         }
     }
     return Demo()

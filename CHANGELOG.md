@@ -5,6 +5,41 @@ All notable changes to SeaBearKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.8.1] - 2026-11-25
+
+Bug fixes back-ported from a full-code audit of the SwiftUI Lab incubator.
+No API changes.
+
+### Fixed
+- **ElasticDrag**: the damping curve no longer overtakes the finger. The slope
+  at the comfort-zone boundary was 8, so the damped value ran *ahead* of the raw
+  drag for the first 26 pt of overshoot before the falloff caught up, which was
+  most visible wherever the comfort zone is 0 (`ReorderableVStack`'s list ends).
+  The curve is now `comfortZone + k * log(1 + excess / k)` with `k = 8`: slope
+  exactly 1 at the boundary, never greater than the raw drag anywhere.
+  **This changes returned values.** `value(200, comfortZone: 100)` was about
+  136.9 and is now about 120.8. Damping past the zone is stronger throughout.
+- **ReorderableVStack**: leaving the view hierarchy mid-drag left the 60 Hz
+  auto-scroll loop and the tilt settle task running, because only `commit()`
+  clears the dragging index. `onDisappear` now stops both.
+- **ReorderableVStack**: re-entering a window under the *same* `UIScrollView`
+  instance never reinstalled the long-press recognizer, because `detach()` left
+  `scrollView` set and the property's `didSet` only reinstalls on a change.
+  Reordering silently stopped working after such a round trip. `detach()` now
+  clears it.
+- **LiquidToggle**: `pinched` was not reset when a transition settled, so a
+  scripted separation that never crossed back under the threshold left the flag
+  set and the next touch-down fired a spurious soft re-merge tick. It is now
+  cleared at settle and on drag start, silently in both cases.
+
+### Changed
+- **ReorderableVStack**: the doc comment described the non-UIKit fallback as the
+  mechanism. It now describes the real one (a `UILongPressGestureRecognizer` on
+  the enclosing scroll view) and states the requirement plainly: on iOS the
+  control needs a `UIScrollView` ancestor or it is touch-inert. The in-source
+  `#Preview` was inert for exactly that reason and is now wrapped in a
+  `ScrollView`.
+
 ## [1.8.0] - 2026-07-28
 
 ### Added
@@ -274,6 +309,7 @@ PersistentNavigationLink("Details") {
 }
 ```
 
+[1.8.1]: https://github.com/seabearDEV/SeaBearKit/compare/v1.8.0...v1.8.1
 [1.8.0]: https://github.com/seabearDEV/SeaBearKit/compare/v1.7.0...v1.8.0
 [1.7.0]: https://github.com/seabearDEV/SeaBearKit/compare/v1.6.0...v1.7.0
 [1.6.0]: https://github.com/seabearDEV/SeaBearKit/compare/v1.5.0...v1.6.0
