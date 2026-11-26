@@ -1,7 +1,7 @@
 {
-  "value": "When bumping version: (1) update `SeaBearKit.version` in Sources/SeaBearKit/SeaBearKit.swift, (2) update `testLibraryMetadata` in Tests/SeaBearKitTests/SeaBearKitTests.swift, (3) add a CHANGELOG.md section following the existing Keep-a-Changelog style with Added/Changed/Fixed/Technical buckets, (4) keep \"Zero breaking changes\" the default — when breaking, call it out explicitly and add a migration guide section. The README is also versioned in places (badges, requirements) — check before tagging.",
+  "value": "When bumping version: (1) update `SeaBearKit.version` in Sources/SeaBearKit/SeaBearKit.swift, (2) update `testLibraryMetadata` in Tests/SeaBearKitTests/SeaBearKitTests.swift, (3) add a CHANGELOG.md section following the existing Keep-a-Changelog style with Added/Changed/Fixed/Technical buckets, (4) keep \"Zero breaking changes\" the default — when breaking, call it out explicitly and add a migration guide section. The README is also versioned in places (badges, requirements) — check before tagging. || 2026-08-22 (1.8.1): confirmed the four-place bump is real. Only three places needed changing for a patch with no new controls: the `SeaBearKit.version` constant, the `testLibraryMetadata` assertion and the CHANGELOG entry, PLUS the compare link at the bottom of the CHANGELOG. The '### Controls' doc-header list in SeaBearKit.swift only moves when a control is added or removed. Verify with `grep -rn '<old version>' --include='*.swift' --include='*.md' . --exclude-dir=.build` returning nothing outside the CHANGELOG history.",
   "meta": {
     "created": 1777479426098,
-    "updated": 1777479426098
+    "updated": 1787421552499
   }
 }
